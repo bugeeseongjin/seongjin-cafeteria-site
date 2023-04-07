@@ -1,19 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html>
+  <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meal Check</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Meal Check</h1>
-        <p>Please enter your school code:</p>
-        <input type="text" id="school-code" placeholder="School code">
-        <button id="submit-btn">Check</button>
-        <div id="result"></div>
+    <title>Meal Check Site</title>
+  </head>
+  <body>
+    <h1>Meal Check Site</h1>
+    <div>
+      <label for="date">Select Date:</label>
+      <input type="date" id="date" name="date" value="" />
+      <button id="submitBtn">Submit</button>
     </div>
-    <script src="script.js"></script>
-</body>
+    <div>
+      <h2>Today's Menu</h2>
+      <div id="menu"></div>
+    </div>
+    <script>
+      const schoolCode = "8111007";
+      const submitBtn = document.getElementById("submitBtn");
+      const menu = document.getElementById("menu");
+      const dateInput = document.getElementById("date");
+      
+      // Display today's date by default
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = (today.getMonth() + 1).toString().padStart(2, "0");
+      const day = today.getDate().toString().padStart(2, "0");
+      dateInput.value = `${year}-${month}-${day}`;
+      
+      submitBtn.addEventListener("click", () => {
+        const selectedDate = dateInput.value.split("-").join("");
+        const url = `https://open.neis.go.kr/hub/mealServiceDietInfo?ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}`;
+        
+        // Fetch menu data from the API
+        fetch(url)
+          .then(response => response.text())
+          .then(data => {
+            // Parse the XML response and extract the menu
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(data, "text/xml");
+            const menuElement = xml.querySelector("DDISH_NM");
+            const menuText = menuElement ? menuElement.textContent : "No menu found.";
+            
+            // Update the menu on the webpage
+            menu.innerHTML = menuText;
+          })
+          .catch(error => {
+            console.error(error);
+            menu.innerHTML = "An error occurred while fetching the menu.";
+          });
+      });
+    </script>
+  </body>
 </html>
