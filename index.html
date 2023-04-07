@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Meal Check Site</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<script src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Check</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<div class="container">
-		<h1>Meal Check Site</h1>
-		<label for="date">Select Date:</label>
-		<input type="date" id="date">
-		<button onclick="getMeal()">Get Meal</button>
-		<div id="meal"></div>
-	</div>
+    <div class="container">
+        <h1>Meal Check</h1>
+        <p>Please enter your school code:</p>
+        <input type="text" id="school-code" placeholder="School code">
+        <button id="submit-btn">Check</button>
+        <div id="result"></div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
