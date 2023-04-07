@@ -1,19 +1,27 @@
-function getMeal() {
-	let date = document.getElementById("date").value;
-	let url = `https://open.neis.go.kr/hub/mealServiceDietInfo?ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=8111007&MLSV_YMD=${date}`;
-	fetch(url)
-	.then(response => response.text())
-	.then(data => {
-		parser = new DOMParser();
-		xmlDoc = parser.parseFromString(data, "text/xml");
-		let mealInfo = xmlDoc.getElementsByTagName("DDISH_NM")[0].childNodes[0].nodeValue;
-		let mealCal = xmlDoc.getElementsByTagName("CAL_INFO")[0].childNodes[0].nodeValue;
-		let mealNtr = xmlDoc.getElementsByTagName("NTR_INFO")[0].childNodes[0].nodeValue;
-		let mealStr = `Menu: ${mealInfo}<br>Calories: ${mealCal}<br>Nutrition Info: ${mealNtr}`;
-		document.getElementById("meal").innerHTML = mealStr;
-	})
-	.catch(error => {
-		console.error('Error:', error);
-		document.getElementById("meal").innerHTML = "Error retrieving meal information";
-	});
-}
+const date = new Date();
+const year = date.getFullYear();
+const month = date.getMonth() + 1;
+const day = date.getDate();
+
+const formattedDate = `${year}${month.toString().padStart(2, '0')}${day.toString().padStart(2, '0')}`;
+
+const submitBtn = document.getElementById('submit-btn');
+submitBtn.addEventListener('click', () => {
+  const schoolCode = document.getElementById('school-code').value;
+  const apiUrl = `https://open.neis.go.kr/hub/mealServiceDietInfo?ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${formattedDate}`;
+  
+  fetch(apiUrl)
+    .then(response => response.text())
+    .then(data => {
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(data, 'application/xml');
+      const mealInfo = xml.getElementsByTagName('DDISH_NM')[0].textContent.trim();
+      
+      const resultContainer = document.getElementById('result');
+      resultContainer.innerHTML = `<p>${mealInfo}</p>`;
+    })
+    .catch(error => {
+      const resultContainer = document.getElementById('result');
+      resultContainer.innerHTML = `<p>${error.message}</p>`;
+    });
+});
