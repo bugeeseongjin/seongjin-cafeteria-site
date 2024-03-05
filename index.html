@@ -113,7 +113,71 @@
         </div>
     </div>
     <script>
-        // JavaScript 코드는 이전에 제공한 것과 동일합니다.
+        const dateInput = document.getElementById("date");
+
+        const fetchMenu = () => {
+            const selectedDate = dateInput.value.split("-").join("");
+            const schoolCode = "8000040";
+            const breakfastContainer = document.getElementById("breakfastMenu");
+            const lunchContainer = document.getElementById("lunchMenu");
+            const dinnerContainer = document.getElementById("dinnerMenu");
+
+            // Fetch menu data from the API
+            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=1`)
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(data, "text/xml");
+                    const menuElement = xml.querySelector("DDISH_NM");
+                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
+                    breakfastContainer.innerHTML = menuText;
+                })
+                .catch(error => {
+                    console.error(error);
+                    breakfastContainer.innerHTML = "An error occurred while fetching the menu.";
+                });
+
+            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=2`)
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(data, "text/xml");
+                    const menuElement = xml.querySelector("DDISH_NM");
+                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
+                    lunchContainer.innerHTML = menuText;
+                })
+                .catch(error => {
+                    console.error(error);
+                    lunchContainer.innerHTML = "An error occurred while fetching the menu.";
+                });
+
+            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=3`)
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(data, "text/xml");
+                    const menuElement = xml.querySelector("DDISH_NM");
+                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
+                    dinnerContainer.innerHTML = menuText;
+                })
+                .catch(error => {
+                    console.error(error);
+                    dinnerContainer.innerHTML = "An error occurred while fetching the menu.";
+                });
+        };
+
+        // Display today's date by default
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = (today.getMonth() + 1).toString().padStart(2, "0");
+        const day = today.getDate().toString().padStart(2, "0");
+        dateInput.value = `${year}-${month}-${day}`;
+
+        // Fetch menu when date changes
+        dateInput.addEventListener("change", fetchMenu);
+
+        // Fetch menu on page load
+        fetchMenu();
     </script>
     <footer>
         <p>Copyright © 2023 hwangseongjin. All rights reserved.</p>
