@@ -44,15 +44,13 @@
 
         .meal-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             margin-top: 20px;
-            gap: 20px;
-            flex-wrap: wrap; /* 모바일에서 줄바꿈하도록 설정 */
+            flex-wrap: wrap; /* 줄바꿈 설정 */
         }
 
         .meal-section {
-            width: calc(50% - 40px);
-            margin: 0 10px;
+            width: calc(30% - 20px); /* 3칸이 가로로 정렬되도록 설정 */
             margin-bottom: 20px;
             border-radius: 10px; /* 정사각형을 위한 border-radius */
             padding: 20px;
@@ -82,7 +80,13 @@
 
         @media screen and (max-width: 768px) {
             .meal-section {
-                width: calc(100% - 40px); /* 모바일에서 전체 폭을 차지하도록 설정 */
+                width: calc(50% - 20px); /* 모바일에서 2칸으로 설정 */
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .meal-section {
+                width: calc(100% - 20px); /* 모바일에서 1칸으로 설정 */
             }
         }
     </style>
@@ -176,10 +180,12 @@
         const month = (today.getMonth() + 1).toString().padStart(2, "0");
         const day = today.getDate().toString().padStart(2, "0");
         dateInput.value = `${year}-${month}-${day}`;
-        fetchMenu();
 
-        // Update menu when date changes
+        // Fetch menu when date changes
         dateInput.addEventListener("change", fetchMenu);
+
+        // Fetch menu for today by default
+        fetchMenu();
     </script>
 
     <footer>
