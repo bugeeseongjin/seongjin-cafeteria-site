@@ -47,10 +47,11 @@
             justify-content: center;
             margin-top: 20px;
             gap: 20px;
+            flex-wrap: wrap; /* 모바일에서 줄바꿈하도록 설정 */
         }
 
         .meal-section {
-            width: calc(33.33% - 40px);
+            width: calc(50% - 40px);
             margin: 0 10px;
             margin-bottom: 20px;
             border-radius: 10px; /* 정사각형을 위한 border-radius */
@@ -81,13 +82,7 @@
 
         @media screen and (max-width: 768px) {
             .meal-section {
-                width: calc(50% - 40px);
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .meal-section {
-                width: calc(100% - 40px);
+                width: calc(100% - 40px); /* 모바일에서 전체 폭을 차지하도록 설정 */
             }
         }
     </style>
