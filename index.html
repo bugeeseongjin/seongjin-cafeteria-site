@@ -12,14 +12,12 @@
             margin: 0;
             padding: 0;
             text-align: center;
-            background-color: #fff; /* 기본 흰색 배경 */
-            color: #000; /* 기본 검은색 글자 */
-            transition: background-color 0.6s, color 0.6s;
+            background-color: #f0f0f0; /* 배경색 흰색 */
         }
 
         h1 {
             background-color: #007bff; /* 헤더 파란색 */
-            color: #fff; /* 헤더 흰색 글자 */
+            color: #fff;
             margin: 0;
             padding: 20px;
         }
@@ -55,23 +53,23 @@
             border-radius: 10px; /* 정사각형을 위한 border-radius */
             padding: 20px;
             text-align: center;
-            background-color: #000; /* 검은색 급식 칸 배경색 */
-            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1); /* 하얀색 그림자 추가 */
+            background-color: #fff; /* 급식 칸 배경색 흰색 */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
         }
 
         .meal-section h2 {
             margin-top: 0;
-            color: #007bff; /* 파란색 칸 타이틀 */
+            color: #007bff; /* 칸 타이틀 파란색 */
         }
 
         .meal-section p {
             margin-top: 10px;
-            color: #fff; /* 하얀색 칸 내용 텍스트 */
+            color: #555; /* 칸 내용 텍스트 색상 회색 */
         }
 
         footer {
             background-color: #333; /* 푸터 배경색 검정색 */
-            color: #fff; /* 푸터 흰색 글자 */
+            color: #fff;
             padding: 20px;
             width: 100%;
             word-wrap: break-word; /* 긴 텍스트 줄 바꿈 설정 */
@@ -80,12 +78,6 @@
             bottom: 0; /* 화면 하단에 고정 */
             left: 0;
             right: 0;
-        }
-
-        .dark-mode-toggle {
-            position: absolute;
-            top: 20px;
-            left: 20px;
         }
 
         @media screen and (max-width: 768px) {
@@ -101,73 +93,6 @@
             footer {
                 position: relative; /* 모바일에서는 fixed가 아닌 relative로 변경 */
             }
-        }
-
-        /* Dark Mode 스타일 */
-        body.dark-mode {
-            background-color: #000; /* Dark mode 배경색 검정색 */
-            color: #fff; /* Dark mode 글자색 흰색 */
-        }
-
-        /* Dark Mode 토글 스타일 */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-
-        .switch__input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .switch__inner {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .switch__inner-icons {
-            position: absolute;
-            height: 100%;
-            width: 200%;
-            left: 0;
-            top: 0;
-            transition: margin-left .4s;
-        }
-
-        .switch__inner-icons svg {
-            height: 100%;
-            width: 50%;
-        }
-
-        .switch__icon {
-            height: 100%;
-            width: 100%;
-        }
-
-        .switch__input:checked + .switch__inner {
-            background-color: #2196F3;
-        }
-
-        .switch__input:checked + .switch__inner .switch__inner-icons {
-            margin-left: -100%;
-        }
-
-        .switch__input:checked + .switch__inner .switch__icon:nth-child(1) {
-            display: none;
-        }
-
-        .switch__input:checked + .switch__inner .switch__icon:nth-child(2) {
-            display: block;
         }
     </style>
 </head>
@@ -191,21 +116,6 @@
             <h2>석식</h2>
             <p id="dinnerMenu"></p>
         </div>
-    </div>
-    <div class="dark-mode-toggle">
-        <label class="switch">
-            <input class="switch__input" type="checkbox" role="switch" name="dark" />
-            <span class="switch__inner"></span>
-            <span class="switch__inner-icons">
-                <svg class="switch__icon" width="24px" height="24px" aria-hidden="true">
-                    <use href="#light" />
-                </svg>
-                <svg class="switch__icon" width="24px" height="24px" aria-hidden="true">
-                    <use href="#dark" />
-                </svg>
-            </span>
-            <span class="switch__sr">Dark Mode</span>
-        </label>
     </div>
     <script>
         const dateInput = document.getElementById("date");
@@ -273,18 +183,6 @@
 
         // Fetch menu on page load
         fetchMenu();
-
-        // Dark mode toggle functionality
-        const darkModeToggle = document.querySelector('.switch__input');
-        const body = document.querySelector('body');
-
-        darkModeToggle.addEventListener('change', () => {
-            if (darkModeToggle.checked) {
-                body.classList.add('dark-mode');
-            } else {
-                body.classList.remove('dark-mode');
-            }
-        });
     </script>
     <footer>
         <p>Copyright © 2023 hwangseongjin. All rights reserved.</p>
