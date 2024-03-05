@@ -23,7 +23,7 @@
 
       <input type="date" id="date" name="date" value="" />
 
-      <button id="submitBtn">확인</button>
+      <button id="submitBtn">급식 조회</button>
 
     </div>
 
@@ -44,65 +44,47 @@
 
       const dateInput = document.getElementById("date");
 
-      
-
-      // Display today's date by default
-
-      const today = new Date();
-
-      const year = today.getFullYear();
-
-      const month = (today.getMonth() + 1).toString().padStart(2, "0");
-
-      const day = today.getDate().toString().padStart(2, "0");
-
-      dateInput.value = `${year}-${month}-${day}`;
-
-      
-
-      submitBtn.addEventListener("click", () => {
-
+      const fetchMenu = () => {
         const selectedDate = dateInput.value.split("-").join("");
-
-        const url = `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=2`;
-
-        
+        const url = `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}`;
 
         // Fetch menu data from the API
-
         fetch(url)
-
           .then(response => response.text())
-
           .then(data => {
-
-            // Parse the XML response and extract the menu
-
+            // Parse the XML response and extract the menu for all meals
             const parser = new DOMParser();
-
             const xml = parser.parseFromString(data, "text/xml");
-
-            const menuElement = xml.querySelector("DDISH_NM");
-
-            const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
-
-            
+            const breakfastElement = xml.querySelector("DDISH_NM[MSHRM_YN='Y']");
+            const lunchElement = xml.querySelector("DDISH_NM[MSHRM_YN='N']");
+            const dinnerElement = xml.querySelector("DDISH_NM[MSHRM_YN='D']");
+            let menuText = "";
+            if (breakfastElement) {
+              menuText += "조식: " + breakfastElement.textContent + "<br>";
+            } else {
+              menuText += "조식: 급식이 없습니다...<br>";
+            }
+            if (lunchElement) {
+              menuText += "중식: " + lunchElement.textContent + "<br>";
+            } else {
+              menuText += "중식: 급식이 없습니다...<br>";
+            }
+            if (dinnerElement) {
+              menuText += "석식: " + dinnerElement.textContent;
+            } else {
+              menuText += "석식: 급식이 없습니다...";
+            }
 
             // Update the menu on the webpage
-
             menu.innerHTML = menuText;
-
           })
-
           .catch(error => {
-
             console.error(error);
-
             menu.innerHTML = "An error occurred while fetching the menu.";
-
           });
+      };
 
-      });
+      submitBtn.addEventListener("click", fetchMenu);
 
     </script>
     
@@ -113,4 +95,3 @@
   </body>
 
 </html>
-
