@@ -47,7 +47,7 @@
         }
 
         .meal-section {
-            width: calc(33.33% - 20px); /* 3칸이 일자로 가로로 정렬되도록 설정 */
+            flex: 1 0 calc(33.33% - 20px); /* 3칸이 일자로 가로로 정렬되도록 설정 */
             margin-bottom: 20px;
             border-radius: 10px;
             padding: 20px;
@@ -88,25 +88,26 @@
             padding: 10px 20px;
             cursor: pointer;
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 20px;
+            right: 20px;
         }
 
         @media screen and (max-width: 768px) {
             .meal-section {
-                width: calc(50% - 20px);
+                flex: 1 0 calc(50% - 20px);
             }
         }
 
         @media screen and (max-width: 480px) {
             .meal-section {
-                width: calc(100% - 20px);
+                flex: 1 0 calc(100% - 20px);
             }
         }
     </style>
 </head>
 <body>
     <h1>성진이의 단양고등학교 급식 사이트</h1>
+    <button class="share-button" onclick="shareMenu()">급식 공유하기</button>
     <div>
         <label for="date">날짜 선택</label>
         <input type="date" id="date" name="date" value="">
@@ -125,7 +126,6 @@
             <p id="dinnerMenu"></p>
         </div>
     </div>
-    <button class="share-button" onclick="shareMenu()">급식 공유하기</button>
     <script>
         const dateInput = document.getElementById("date");
 
