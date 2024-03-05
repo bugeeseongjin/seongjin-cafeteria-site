@@ -74,10 +74,7 @@
             width: 100%;
             word-wrap: break-word; /* 긴 텍스트 줄 바꿈 설정 */
             font-size: 14px; /* 푸터 텍스트 크기 조정 */
-            position: fixed; /* Footer를 항상 화면 하단에 고정 */
-            bottom: 0; /* 화면 하단에 고정 */
-            left: 0;
-            right: 0;
+            position: relative; /* Footer를 항상 화면 하단에 고정 */
         }
 
         @media screen and (max-width: 768px) {
@@ -89,9 +86,6 @@
         @media screen and (max-width: 480px) {
             .meal-section {
                 width: calc(100% - 20px); /* 모바일에서 1칸으로 설정 */
-            }
-            footer {
-                position: relative; /* 모바일에서는 fixed가 아닌 relative로 변경 */
             }
         }
     </style>
@@ -117,75 +111,71 @@
             <p id="dinnerMenu"></p>
         </div>
     </div>
-    <script>
-        const dateInput = document.getElementById("date");
-
-        const fetchMenu = () => {
-            const selectedDate = dateInput.value.split("-").join("");
-            const schoolCode = "8000040";
-            const breakfastContainer = document.getElementById("breakfastMenu");
-            const lunchContainer = document.getElementById("lunchMenu");
-            const dinnerContainer = document.getElementById("dinnerMenu");
-
-            // Fetch menu data from the API
-            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=1`)
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(data, "text/xml");
-                    const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
-                    breakfastContainer.innerHTML = menuText;
-                })
-                .catch(error => {
-                    console.error(error);
-                    breakfastContainer.innerHTML = "An error occurred while fetching the menu.";
-                });
-
-            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=2`)
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(data, "text/xml");
-                    const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
-                    lunchContainer.innerHTML = menuText;
-                })
-                .catch(error => {
-                    console.error(error);
-                    lunchContainer.innerHTML = "An error occurred while fetching the menu.";
-                });
-
-            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=3`)
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(data, "text/xml");
-                    const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
-                    dinnerContainer.innerHTML = menuText;
-                })
-                .catch(error => {
-                    console.error(error);
-                    dinnerContainer.innerHTML = "An error occurred while fetching the menu.";
-                });
-        };
-
-        // Display today's date by default
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = (today.getMonth() + 1).toString().padStart(2, "0");
-        const day = today.getDate().toString().padStart(2, "0");
-        dateInput.value = `${year}-${month}-${day}`;
-
-        // Fetch menu when date changes
-        dateInput.addEventListener("change", fetchMenu);
-
-        // Fetch menu on page load
-        fetchMenu();
-    </script>
     <footer>
         <p>Copyright © 2023 hwangseongjin. All rights reserved.</p>
     </footer>
+
+    <!-- AddToAny BEGIN -->
+    <div class="a2a_kit a2a_kit_size_32 a2a_default_style" data-a2a-url="https://seongjin-cafeteria-site.netlify.app/" data-a2a-title="성진이의 단양고등학교 급식 사이트">
+        <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+        <a class="a2a_button_facebook"></a>
+        <a class="a2a_button_kakao"></a>
+        <a class="a2a_button_email"></a>
+        <a class="a2a_button_copy_link"></a>
+    </div>
+    <script>
+        var a2a_config = a2a_config || {};
+        a2a_config.locale = "ko";
+    </script>
+    <script async src="https://static.addtoany.com/menu/page.js"></script>
+    <!-- AddToAny END -->
+
+    <script>
+        const schoolCode = "8000040";
+        const dateInput = document.getElementById("date");
+        const breakfastMenu = document.getElementById("breakfastMenu");
+        const lunchMenu = document.getElementById("lunchMenu");
+        const dinnerMenu = document.getElementById("dinnerMenu");
+
+        const fetchMenu = () => {
+            const selectedDate = dateInput.value.split("-").join("");
+
+            fetchMenuByMealCode(1, breakfastMenu);
+            fetchMenuByMealCode(2, lunchMenu);
+            fetchMenuByMealCode(3, dinnerMenu);
+        };
+
+        const fetchMenuByMealCode = (mealCode, container) => {
+            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=${mealCode}`)
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(data, "text/xml");
+                    const menuElement = xml.querySelector("DDISH_NM");
+                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
+                    container.innerHTML = menuText;
+                })
+                .catch(error => {
+                    console.error(error);
+                    container.innerHTML = "An error occurred while fetching the menu.";
+                });
+        };
+
+        const adjustFooterPosition = () => {
+            const footer = document.querySelector("footer");
+            const rect = footer.getBoundingClientRect();
+            if (rect.bottom > window.innerHeight) {
+                footer.style.bottom = "0";
+            } else {
+                footer.style.bottom = "";
+            }
+        };
+
+        window.addEventListener("resize", adjustFooterPosition);
+        window.addEventListener("load", adjustFooterPosition);
+
+        dateInput.addEventListener("change", fetchMenu);
+        fetchMenu();
+    </script>
 </body>
 </html>
