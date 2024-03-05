@@ -36,20 +36,23 @@
             border-radius: 3px;
             font-size: 16px;
             padding: 8px;
-            width: 200px;
+            width: 90%; /* 폼 인풋 폭을 90%로 설정 */
+            max-width: 300px; /* 폼 인풋 최대 폭 설정 */
             background-color: #fff; /* 폼 인풋 배경색 흰색 */
             color: #000; /* 폼 인풋 텍스트 검정색 */
         }
 
         .meal-container {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             margin-top: 20px;
+            gap: 20px;
         }
 
         .meal-section {
-            flex: 0 0 calc(33.33% - 20px);
+            width: calc(33.33% - 40px);
             margin: 0 10px;
+            margin-bottom: 20px;
             border-radius: 10px; /* 정사각형을 위한 border-radius */
             padding: 20px;
             text-align: center;
@@ -65,6 +68,27 @@
         .meal-section p {
             margin-top: 10px;
             color: #555; /* 칸 내용 텍스트 색상 회색 */
+        }
+
+        footer {
+            background-color: #333; /* 푸터 배경색 검정색 */
+            color: #fff;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @media screen and (max-width: 768px) {
+            .meal-section {
+                width: calc(50% - 40px);
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .meal-section {
+                width: calc(100% - 40px);
+            }
         }
     </style>
 
