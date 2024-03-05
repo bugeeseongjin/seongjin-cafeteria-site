@@ -12,14 +12,14 @@
             margin: 0;
             padding: 0;
             text-align: center;
-            background-color: #000; /* 검은색 배경 */
+            background-color: #fff; /* 기본 흰색 배경 */
+            color: #000; /* 기본 검은색 글자 */
             transition: background-color 0.6s, color 0.6s;
-            color: #fff; /* 하얀색 글씨 */
         }
 
         h1 {
-            background-color: #001f3f; /* 짙은 파란색 헤더 */
-            color: #fff;
+            background-color: #007bff; /* 헤더 파란색 */
+            color: #fff; /* 헤더 흰색 글자 */
             margin: 0;
             padding: 20px;
         }
@@ -28,7 +28,7 @@
             display: block;
             font-weight: bold;
             margin-bottom: 10px;
-            color: #fff; /* 하얀색 폼 라벨 텍스트 */
+            color: #000; /* 폼 라벨 텍스트 검정색 */
         }
 
         input[type="date"] {
@@ -38,8 +38,8 @@
             padding: 8px;
             width: 90%; /* 폼 인풋 폭을 90%로 설정 */
             max-width: 300px; /* 폼 인풋 최대 폭 설정 */
-            background-color: #000; /* 검은색 폼 인풋 배경색 */
-            color: #fff; /* 하얀색 폼 인풋 텍스트 */
+            background-color: #fff; /* 폼 인풋 배경색 흰색 */
+            color: #000; /* 폼 인풋 텍스트 검정색 */
         }
 
         .meal-container {
@@ -70,8 +70,8 @@
         }
 
         footer {
-            background-color: #000; /* 검은색 푸터 배경색 */
-            color: #fff;
+            background-color: #333; /* 푸터 배경색 검정색 */
+            color: #fff; /* 푸터 흰색 글자 */
             padding: 20px;
             width: 100%;
             word-wrap: break-word; /* 긴 텍스트 줄 바꿈 설정 */
@@ -103,11 +103,13 @@
             }
         }
 
+        /* Dark Mode 스타일 */
         body.dark-mode {
-            background-color: #fff; /* Dark mode 배경색 */
-            color: #000; /* Dark mode 글자색 */
+            background-color: #000; /* Dark mode 배경색 검정색 */
+            color: #fff; /* Dark mode 글자색 흰색 */
         }
 
+        /* Dark Mode 토글 스타일 */
         .switch {
             position: relative;
             display: inline-block;
