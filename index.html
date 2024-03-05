@@ -8,7 +8,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>성진이의 단양고등학교 급식 사이트</title>
     
-    <style> body { font-family: Arial, sans-serif; margin: 0; padding: 0; text-align: center; } h1 { background-color: #62b53f; color: #fff; margin: 0; padding: 20px; } label { display: block; font-weight: bold; margin-bottom: 10px; } input[type="date"] { border: 1px solid #ccc; border-radius: 3px; font-size: 16px; padding: 8px; width: 200px; } .meal-container { border: 1px solid #ccc; border-radius: 3px; font-size: 20px; margin-top: 20px; padding: 20px; text-align: center; white-space: pre-wrap; margin: 0 auto; max-width: 500px; } </style>
+    <style> 
+      body { 
+        font-family: Arial, sans-serif; 
+        margin: 0; 
+        padding: 0; 
+        text-align: center; 
+      } 
+      h1 { 
+        background-color: #62b53f; 
+        color: #fff; 
+        margin: 0; 
+        padding: 20px; 
+      } 
+      label { 
+        display: block; 
+        font-weight: bold; 
+        margin-bottom: 10px; 
+      } 
+      input[type="date"] { 
+        border: 1px solid #ccc; 
+        border-radius: 3px; 
+        font-size: 16px; 
+        padding: 8px; 
+        width: 200px; 
+      } 
+      .meal-container { 
+        border: 1px solid #ccc; 
+        border-radius: 3px; 
+        font-size: 20px; 
+        margin-top: 20px; 
+        padding: 20px; 
+        text-align: center; 
+        white-space: pre-wrap; 
+        margin: 0 auto; 
+        max-width: 500px; 
+        display: flex; 
+        flex-direction: row; 
+        justify-content: space-around; 
+      } 
+      .meal-section { 
+        flex: 1; 
+        margin: 0 10px; 
+      } 
+    </style>
 
   </head>
 
@@ -24,19 +67,21 @@
 
     </div>
 
-    <div class="meal-container" id="breakfastContainer">
-      <h2>조식</h2>
-      <div id="breakfastMenu"></div>
-    </div>
-
-    <div class="meal-container" id="lunchContainer">
-      <h2>중식</h2>
-      <div id="lunchMenu"></div>
-    </div>
-
-    <div class="meal-container" id="dinnerContainer">
-      <h2>석식</h2>
-      <div id="dinnerMenu"></div>
+    <div class="meal-container">
+      <div class="meal-section" id="breakfastContainer">
+        <h2>조식</h2>
+        <div id="breakfastMenu"></div>
+      </div>
+      
+      <div class="meal-section" id="lunchContainer">
+        <h2>중식</h2>
+        <div id="lunchMenu"></div>
+      </div>
+      
+      <div class="meal-section" id="dinnerContainer">
+        <h2>석식</h2>
+        <div id="dinnerMenu"></div>
+      </div>
     </div>
 
     <script>
