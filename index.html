@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <link rel="shortcut icon" href="./_e44a2cde-18dc-487d-96e3-2dee61acc3a5.ico">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>성진이의 단양고등학교 급식 사이트</title>
-
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             text-align: center;
-            background-color: #f0f0f0; /* 배경색 흰색 */
+            background-color: #f0f0f0;
         }
 
         h1 {
-            background-color: #007bff; /* 헤더 파란색 */
+            background-color: #007bff;
             color: #fff;
             margin: 0;
             padding: 20px;
@@ -26,7 +24,7 @@
             display: block;
             font-weight: bold;
             margin-bottom: 10px;
-            color: #000; /* 폼 라벨 텍스트 검정색 */
+            color: #000;
         }
 
         input[type="date"] {
@@ -34,68 +32,81 @@
             border-radius: 3px;
             font-size: 16px;
             padding: 8px;
-            width: 90%; /* 폼 인풋 폭을 90%로 설정 */
-            max-width: 300px; /* 폼 인풋 최대 폭 설정 */
-            background-color: #fff; /* 폼 인풋 배경색 흰색 */
-            color: #000; /* 폼 인풋 텍스트 검정색 */
+            width: 90%;
+            max-width: 300px;
+            background-color: #fff;
+            color: #000;
         }
 
         .meal-container {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
-            flex-wrap: wrap; /* 줄바꿈 설정 */
+            flex-wrap: wrap;
         }
 
         .meal-section {
-            width: calc(30% - 20px); /* 3칸이 가로로 정렬되도록 설정 */
+            width: calc(33.33% - 20px); /* 3칸이 일자로 가로로 정렬되도록 설정 */
             margin-bottom: 20px;
-            border-radius: 10px; /* 정사각형을 위한 border-radius */
+            border-radius: 10px;
             padding: 20px;
             text-align: center;
-            background-color: #fff; /* 급식 칸 배경색 흰색 */
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
 
         .meal-section h2 {
             margin-top: 0;
-            color: #007bff; /* 칸 타이틀 파란색 */
+            color: #007bff;
         }
 
         .meal-section p {
             margin-top: 10px;
-            color: #555; /* 칸 내용 텍스트 색상 회색 */
+            color: #555;
         }
 
         footer {
-            background-color: #333; /* 푸터 배경색 검정색 */
+            background-color: #333;
             color: #fff;
             padding: 20px;
             width: 100%;
-            word-wrap: break-word; /* 긴 텍스트 줄 바꿈 설정 */
-            font-size: 14px; /* 푸터 텍스트 크기 조정 */
-            position: relative; /* Footer를 항상 화면 하단에 고정 */
+            word-wrap: break-word;
+            font-size: 14px;
+            clear: both;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .share-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 20px;
         }
 
         @media screen and (max-width: 768px) {
             .meal-section {
-                width: calc(50% - 20px); /* 모바일에서 2칸으로 설정 */
+                width: calc(50% - 20px);
             }
         }
 
         @media screen and (max-width: 480px) {
             .meal-section {
-                width: calc(100% - 20px); /* 모바일에서 1칸으로 설정 */
+                width: calc(100% - 20px);
             }
         }
     </style>
 </head>
-
 <body>
     <h1>성진이의 단양고등학교 급식 사이트</h1>
     <div>
         <label for="date">날짜 선택</label>
-        <input type="date" id="date" name="date" value="" />
+        <input type="date" id="date" name="date" value="">
     </div>
     <div class="meal-container">
         <div class="meal-section" id="breakfastContainer">
@@ -111,71 +122,86 @@
             <p id="dinnerMenu"></p>
         </div>
     </div>
-    <footer>
-        <p>Copyright © 2023 hwangseongjin. All rights reserved.</p>
-    </footer>
-
-    <!-- AddToAny BEGIN -->
-    <div class="a2a_kit a2a_kit_size_32 a2a_default_style" data-a2a-url="https://seongjin-cafeteria-site.netlify.app/" data-a2a-title="성진이의 단양고등학교 급식 사이트">
-        <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
-        <a class="a2a_button_facebook"></a>
-        <a class="a2a_button_kakao"></a>
-        <a class="a2a_button_email"></a>
-        <a class="a2a_button_copy_link"></a>
-    </div>
+    <button class="share-button" onclick="shareMenu()">급식 공유하기</button>
     <script>
-        var a2a_config = a2a_config || {};
-        a2a_config.locale = "ko";
-    </script>
-    <script async src="https://static.addtoany.com/menu/page.js"></script>
-    <!-- AddToAny END -->
-
-    <script>
-        const schoolCode = "8000040";
         const dateInput = document.getElementById("date");
-        const breakfastMenu = document.getElementById("breakfastMenu");
-        const lunchMenu = document.getElementById("lunchMenu");
-        const dinnerMenu = document.getElementById("dinnerMenu");
 
         const fetchMenu = () => {
             const selectedDate = dateInput.value.split("-").join("");
+            const schoolCode = "8000040";
+            const breakfastContainer = document.getElementById("breakfastMenu");
+            const lunchContainer = document.getElementById("lunchMenu");
+            const dinnerContainer = document.getElementById("dinnerMenu");
 
-            fetchMenuByMealCode(1, breakfastMenu);
-            fetchMenuByMealCode(2, lunchMenu);
-            fetchMenuByMealCode(3, dinnerMenu);
-        };
-
-        const fetchMenuByMealCode = (mealCode, container) => {
-            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=${mealCode}`)
+            // Fetch menu data from the API
+            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=1`)
                 .then(response => response.text())
                 .then(data => {
                     const parser = new DOMParser();
                     const xml = parser.parseFromString(data, "text/xml");
                     const menuElement = xml.querySelector("DDISH_NM");
                     const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
-                    container.innerHTML = menuText;
+                    breakfastContainer.innerHTML = menuText;
                 })
                 .catch(error => {
                     console.error(error);
-                    container.innerHTML = "An error occurred while fetching the menu.";
+                    breakfastContainer.innerHTML = "An error occurred while fetching the menu.";
+                });
+
+            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=2`)
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(data, "text/xml");
+                    const menuElement = xml.querySelector("DDISH_NM");
+                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
+                    lunchContainer.innerHTML = menuText;
+                })
+                .catch(error => {
+                    console.error(error);
+                    lunchContainer.innerHTML = "An error occurred while fetching the menu.";
+                });
+
+            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=3`)
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(data, "text/xml");
+                    const menuElement = xml.querySelector("DDISH_NM");
+                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
+                    dinnerContainer.innerHTML = menuText;
+                })
+                .catch(error => {
+                    console.error(error);
+                    dinnerContainer.innerHTML = "An error occurred while fetching the menu.";
                 });
         };
 
-        const adjustFooterPosition = () => {
-            const footer = document.querySelector("footer");
-            const rect = footer.getBoundingClientRect();
-            if (rect.bottom > window.innerHeight) {
-                footer.style.bottom = "0";
-            } else {
-                footer.style.bottom = "";
-            }
+        const shareMenu = () => {
+            const selectedDate = dateInput.value;
+            const breakfastMenu = document.getElementById("breakfastMenu").innerText;
+            const lunchMenu = document.getElementById("lunchMenu").innerText;
+            const dinnerMenu = document.getElementById("dinnerMenu").innerText;
+            const sharedText = `${selectedDate} 급식\n*조식*\n${breakfastMenu}\n-------------------\n*중식*\n${lunchMenu}\n-------------------\n*석식*\n${dinnerMenu}`;
+            // Implement your sharing mechanism here (e.g., copying to clipboard, sharing via social media, etc.)
+            console.log(sharedText);
         };
 
-        window.addEventListener("resize", adjustFooterPosition);
-        window.addEventListener("load", adjustFooterPosition);
+        // Display today's date by default
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = (today.getMonth() + 1).toString().padStart(2, "0");
+        const day = today.getDate().toString().padStart(2, "0");
+        dateInput.value = `${year}-${month}-${day}`;
 
+        // Fetch menu when date changes
         dateInput.addEventListener("change", fetchMenu);
+
+        // Fetch menu on page load
         fetchMenu();
     </script>
+    <footer>
+        <p>Copyright © 2023 hwangseongjin. All rights reserved.</p>
+    </footer>
 </body>
 </html>
