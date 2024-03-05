@@ -1,102 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <link rel="shortcut icon" href="./_e44a2cde-18dc-487d-96e3-2dee61acc3a5.ico">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>성진이의 단양고등학교 급식 사이트</title>
-
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            background-color: #f0f0f0; /* 배경색 흰색 */
+        /* Your CSS styles here */
+        /* Dark mode toggle button styles */
+        .switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
         }
 
-        h1 {
-            background-color: #007bff; /* 헤더 파란색 */
-            color: #fff;
-            margin: 0;
-            padding: 20px;
+        .switch__input {
+            display: none;
         }
 
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #000; /* 폼 라벨 텍스트 검정색 */
+        .switch__icon {
+            fill: none;
+            stroke: #000;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.3s ease;
         }
 
-        input[type="date"] {
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            font-size: 16px;
-            padding: 8px;
-            width: 90%; /* 폼 인풋 폭을 90%로 설정 */
-            max-width: 300px; /* 폼 인풋 최대 폭 설정 */
-            background-color: #fff; /* 폼 인풋 배경색 흰색 */
-            color: #000; /* 폼 인풋 텍스트 검정색 */
+        .switch__input:checked + .switch__icon:first-of-type {
+            stroke: #fff;
         }
 
-        .meal-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            flex-wrap: wrap; /* 줄바꿈 설정 */
+        .switch__input:checked + .switch__icon:last-of-type {
+            stroke: #000;
         }
 
-        .meal-section {
-            width: calc(30% - 20px); /* 3칸이 가로로 정렬되도록 설정 */
-            margin-bottom: 20px;
-            border-radius: 10px; /* 정사각형을 위한 border-radius */
-            padding: 20px;
-            text-align: center;
-            background-color: #fff; /* 급식 칸 배경색 흰색 */
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+        .switch__inner {
+            display: none;
         }
 
-        .meal-section h2 {
-            margin-top: 0;
-            color: #007bff; /* 칸 타이틀 파란색 */
+        .switch__inner:checked + .switch__inner-icons .switch__icon:first-of-type {
+            opacity: 0;
+            transform: translateX(-100%);
         }
 
-        .meal-section p {
-            margin-top: 10px;
-            color: #555; /* 칸 내용 텍스트 색상 회색 */
+        .switch__inner:checked + .switch__inner-icons .switch__icon:last-of-type {
+            opacity: 1;
+            transform: translateX(0);
         }
 
-        footer {
-            background-color: #333; /* 푸터 배경색 검정색 */
-            color: #fff;
-            padding: 20px;
-            width: 100%;
-            word-wrap: break-word; /* 긴 텍스트 줄 바꿈 설정 */
-            font-size: 14px; /* 푸터 텍스트 크기 조정 */
-            position: fixed; /* Footer를 항상 화면 하단에 고정 */
-            bottom: 0; /* 화면 하단에 고정 */
-            left: 0;
-            right: 0;
+        .switch__inner {
+            display: none;
         }
 
-        @media screen and (max-width: 768px) {
-            .meal-section {
-                width: calc(50% - 20px); /* 모바일에서 2칸으로 설정 */
-            }
+        .switch__inner:checked + .switch__inner-icons .switch__icon:first-of-type {
+            opacity: 0;
+            transform: translateX(-100%);
         }
 
-        @media screen and (max-width: 480px) {
-            .meal-section {
-                width: calc(100% - 20px); /* 모바일에서 1칸으로 설정 */
-            }
-            footer {
-                position: relative; /* 모바일에서는 fixed가 아닌 relative로 변경 */
-            }
+        .switch__inner:checked + .switch__inner-icons .switch__icon:last-of-type {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .switch__inner {
+            display: none;
+        }
+
+        .switch__inner:checked + .switch__inner-icons .switch__icon:first-of-type {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+
+        .switch__inner:checked + .switch__inner-icons .switch__icon:last-of-type {
+            opacity: 1;
+            transform: translateX(0);
         }
     </style>
 </head>
-
 <body>
     <h1>성진이의 단양고등학교 급식 사이트</h1>
     <div>
@@ -117,75 +100,48 @@
             <p id="dinnerMenu"></p>
         </div>
     </div>
-    <script>
-        const dateInput = document.getElementById("date");
-
-        const fetchMenu = () => {
-            const selectedDate = dateInput.value.split("-").join("");
-            const schoolCode = "8000040";
-            const breakfastContainer = document.getElementById("breakfastMenu");
-            const lunchContainer = document.getElementById("lunchMenu");
-            const dinnerContainer = document.getElementById("dinnerMenu");
-
-            // Fetch menu data from the API
-            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=1`)
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(data, "text/xml");
-                    const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
-                    breakfastContainer.innerHTML = menuText;
-                })
-                .catch(error => {
-                    console.error(error);
-                    breakfastContainer.innerHTML = "An error occurred while fetching the menu.";
-                });
-
-            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=2`)
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(data, "text/xml");
-                    const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
-                    lunchContainer.innerHTML = menuText;
-                })
-                .catch(error => {
-                    console.error(error);
-                    lunchContainer.innerHTML = "An error occurred while fetching the menu.";
-                });
-
-            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=3`)
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(data, "text/xml");
-                    const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
-                    dinnerContainer.innerHTML = menuText;
-                })
-                .catch(error => {
-                    console.error(error);
-                    dinnerContainer.innerHTML = "An error occurred while fetching the menu.";
-                });
-        };
-
-        // Display today's date by default
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = (today.getMonth() + 1).toString().padStart(2, "0");
-        const day = today.getDate().toString().padStart(2, "0");
-        dateInput.value = `${year}-${month}-${day}`;
-
-        // Fetch menu when date changes
-        dateInput.addEventListener("change", fetchMenu);
-
-        // Fetch menu on page load
-        fetchMenu();
-    </script>
     <footer>
         <p>Copyright © 2023 hwangseongjin. All rights reserved.</p>
     </footer>
+
+    <!-- Dark mode toggle button -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+        <symbol id="light" viewBox="0 0 24 24">
+            <path d="M12 2c-3.182 0-5.989 1.948-7.125 4.903-.153.31-.036.68.271.871.268.163.603.153.867-.029C7.239 7.078 9.54 6 12 6c4.963 0 9 4.037 9 9 0 2.375-.912 4.529-2.418 6.165-.195.219-.477.335-.756.335-.161 0-.324-.04-.47-.123-.319-.194-.405-.594-.211-.914.913-1.787 1.415-3.826 1.415-5.863 0-6.627-5.373-12-12-12zm0 2c5.514 0 10 4.486 10 10s-4.486 10-10 10c-1.56 0-3.092-.364-4.471-1.056-.294-.156-.415-.525-.271-.825.156-.3.524-.416.826-.27 1.206.642 2.569.951 3.945.951 4.418 0 8-3.582 8-8 0-2.205-.892-4.209-2.342-5.657C15.209 4.892 13.205 4 11 4c-.276 0-.5-.224-.5-.5s.224-.5.5-.5z"/>
+        </symbol>
+        <symbol id="dark" viewBox="0 0 24 24">
+            <path d="M11 2c-3.309 0-6.314 1.85-7.853 4.775-.3.6.039 1.325.746 1.588C5.607 8.891 8.189 8 11 8c4.963 0 9 4.037 9 9 0 2.375-.912 4.529-2.418 6.165-.195.219-.477.335-.756.335-.161 0-.324-.04-.47-.123-.319-.194-.405-.594-.211-.914.913-1.787 1.415-3.826 1.415-5.863 0-6.627-5.373-12-12-12zm0 2c5.514 0 10 4.486 10 10s-4.486 10-10 10c-1.56 0-3.092-.364-4.471-1.056-.294-.156-.415-.525-.271-.825.156-.3.524-.416.826-.27 1.206.642 2.569.951 3.945.951 4.418 0 8-3.582 8-8 0-2.205-.892-4.209-2.342-5.657C15.209 4.892 13.205 4 11 4c-.276 0-.5-.224-.5-.5s.224-.5.5-.5z"/>
+        </symbol>
+    </svg>
+    <label class="switch">
+        <input class="switch__input" type="checkbox" role="switch" name="dark" />
+        <svg class="switch__icon" width="24px" height="24px" aria-hidden="true">
+            <use href="#light" />
+        </svg>
+        <svg class="switch__icon" width="24px" height="24px" aria-hidden="true">
+            <use href="#dark" />
+        </svg>
+        <span class="switch__inner"></span>
+        <span class="switch__inner-icons">
+            <svg class="switch__icon" width="24px" height="24px" aria-hidden="true">
+                <use href="#light" />
+            </svg>
+            <svg class="switch__icon" width="24px" height="24px" aria-hidden="true">
+                <use href="#dark" />
+            </svg>
+        </span>
+        <span class="switch__sr">Dark Mode</span>
+    </label>
+
+    <script>
+        const switchInput = document.querySelector('.switch__input');
+        const switchIcons = document.querySelectorAll('.switch__icon');
+
+        // Toggle dark mode
+        switchInput.addEventListener('change', function() {
+            document.body.classList.toggle('dark-mode');
+            switchIcons.forEach(icon => icon.classList.toggle('active'));
+        });
+    </script>
 </body>
 </html>
