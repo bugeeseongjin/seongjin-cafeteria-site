@@ -11,6 +11,7 @@
             padding: 0;
             text-align: center;
             background-color: #f0f0f0;
+            position: relative;
         }
 
         h1 {
@@ -86,7 +87,9 @@
             border-radius: 5px;
             padding: 10px 20px;
             cursor: pointer;
-            margin-top: 20px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
         }
 
         @media screen and (max-width: 768px) {
@@ -183,8 +186,9 @@
             const lunchMenu = document.getElementById("lunchMenu").innerText;
             const dinnerMenu = document.getElementById("dinnerMenu").innerText;
             const sharedText = `${selectedDate} 급식\n*조식*\n${breakfastMenu}\n-------------------\n*중식*\n${lunchMenu}\n-------------------\n*석식*\n${dinnerMenu}`;
-            // Implement your sharing mechanism here (e.g., copying to clipboard, sharing via social media, etc.)
-            console.log(sharedText);
+            navigator.clipboard.writeText(sharedText)
+                .then(() => alert("급식 정보가 클립보드에 복사되었습니다."))
+                .catch(error => console.error("복사 실패:", error));
         };
 
         // Display today's date by default
