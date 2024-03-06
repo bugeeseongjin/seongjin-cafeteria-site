@@ -139,7 +139,7 @@
                     const parser = new DOMParser();
                     const xml = parser.parseFromString(data, "text/xml");
                     const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
+                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 조식이 없습니다...";
                     breakfastContainer.innerHTML = menuText;
                 })
                 .catch(error => {
@@ -153,7 +153,7 @@
                     const parser = new DOMParser();
                     const xml = parser.parseFromString(data, "text/xml");
                     const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
+                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 중식이 없습니다...";
                     lunchContainer.innerHTML = menuText;
                 })
                 .catch(error => {
@@ -167,7 +167,7 @@
                     const parser = new DOMParser();
                     const xml = parser.parseFromString(data, "text/xml");
                     const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
+                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 석식이 없습니다...";
                     dinnerContainer.innerHTML = menuText;
                 })
                 .catch(error => {
