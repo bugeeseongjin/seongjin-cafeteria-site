@@ -43,13 +43,12 @@
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
-            flex-wrap: wrap;
             padding: 0 20px;
             box-sizing: border-box;
         }
 
         .meal-section {
-            flex: 1 0 calc(33.33% - 20px);
+            flex: 1 1 30%; /* 변경된 부분 */
             margin-bottom: 20px;
             border-radius: 10px;
             padding: 20px;
@@ -58,10 +57,6 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             min-width: 200px;
             min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
 
         .meal-section h2 {
@@ -95,14 +90,8 @@
         }
 
         @media screen and (max-width: 768px) {
-            .meal-section {
-                flex: 1 0 calc(50% - 20px);
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .meal-section {
-                flex: 1 0 calc(100% - 20px);
+            .meal-container {
+                flex-wrap: wrap;
             }
         }
     </style>
