@@ -12,6 +12,7 @@
             padding: 0;
             text-align: center;
             background-color: #f0f0f0;
+            position: relative; /* footer 고정을 위한 설정 */
         }
 
         h1 {
@@ -74,7 +75,10 @@
             color: #fff;
             padding: 20px;
             font-size: 14px;
-            clear: both;
+            width: 100%; /* 변경된 부분 */
+            position: fixed; /* 변경된 부분 */
+            bottom: 0; /* 변경된 부분 */
+            left: 0; /* 변경된 부분 */
         }
 
         .share-button {
