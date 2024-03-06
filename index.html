@@ -55,6 +55,8 @@
             text-align: center;
             background-color: #fff;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            min-width: 200px; /* 최소 너비 추가 */
+            min-height: 200px; /* 최소 높이 추가 */
         }
 
         .meal-section h2 {
@@ -75,7 +77,8 @@
             word-wrap: break-word;
             font-size: 14px;
             clear: both;
-            position: relative;
+            position: absolute;
+            bottom: 0; /* 바닥에 붙이도록 수정 */
         }
 
         .share-button {
