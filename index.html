@@ -12,7 +12,6 @@
             padding: 0;
             text-align: center;
             background-color: #f0f0f0;
-            position: relative;
         }
 
         h1 {
@@ -89,6 +88,7 @@
             position: fixed;
             bottom: 0;
             left: 0;
+            z-index: 999;
         }
 
         .share-button {
@@ -101,6 +101,7 @@
             position: absolute;
             top: 20px;
             right: 20px;
+            z-index: 999;
         }
 
         @media screen and (max-width: 768px) {
@@ -113,17 +114,21 @@
             .meal-section {
                 flex: 1 1 100%;
             }
+
+            .share-button {
+                top: 70px;
+            }
         }
     </style>
 </head>
 
 <body>
     <h1>성진이의 단양고등학교 급식 사이트</h1>
-    <button class="share-button" onclick="shareMenu()">급식 공유하기</button>
     <div>
         <label for="date">날짜 선택</label>
         <input type="date" id="date" name="date" value="">
     </div>
+    <button class="share-button" onclick="shareMenu()">급식 공유하기</button>
     <div class="meal-container">
         <div class="meal-section" id="breakfastContainer">
             <h2>조식</h2>
