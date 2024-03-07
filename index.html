@@ -17,12 +17,13 @@
             min-height: 100vh;
         }
 
-        h1 {
+        h1, footer {
             background-color: #007bff;
             color: #fff;
             margin: 0;
             padding: 20px;
             width: 100%;
+            box-sizing: border-box;
         }
 
         label {
@@ -238,7 +239,9 @@
         // Fetch menu on page load
         fetchMenu();
     </script>
-    <p class="footer-text">&copy; 2023 hwangseongjin. All rights reserved.</p>
+    <footer>
+        <p class="footer-text">&copy; 2023 hwangseongjin. All rights reserved.</p>
+    </footer>
 </body>
 
 </html>
