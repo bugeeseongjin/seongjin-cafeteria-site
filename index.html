@@ -12,7 +12,9 @@
             padding: 0;
             text-align: center;
             background-color: #f0f0f0;
-            overflow-x: hidden; /* Prevent horizontal scrolling */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         h1 {
@@ -47,6 +49,7 @@
             margin-top: 20px;
             padding: 0 20px;
             box-sizing: border-box;
+            flex-grow: 1;
         }
 
         .meal-section {
@@ -86,10 +89,6 @@
             padding: 20px;
             font-size: 14px;
             width: 100%;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            z-index: 999;
         }
 
         .share-button {
@@ -102,7 +101,6 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            z-index: 999;
         }
 
         @media screen and (max-width: 768px) {
