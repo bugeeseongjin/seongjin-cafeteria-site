@@ -12,7 +12,7 @@
             padding: 0;
             text-align: center;
             background-color: #f0f0f0;
-            position: relative; /* footer 고정을 위한 설정 */
+            position: relative;
         }
 
         h1 {
@@ -42,6 +42,7 @@
 
         .meal-container {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             margin-top: 20px;
             padding: 0 20px;
@@ -49,7 +50,7 @@
         }
 
         .meal-section {
-            flex: 1 1 30%; /* 변경된 부분 */
+            flex: 1 1 calc(33.33% - 20px);
             margin-bottom: 20px;
             border-radius: 10px;
             padding: 20px;
@@ -58,6 +59,7 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             min-width: 200px;
             min-height: 200px;
+            position: relative;
         }
 
         .meal-section h2 {
@@ -70,15 +72,23 @@
             color: #555;
         }
 
+        .cal-info {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            font-size: 12px;
+            color: #888;
+        }
+
         footer {
             background-color: #333;
             color: #fff;
             padding: 20px;
             font-size: 14px;
-            width: 100%; /* 변경된 부분 */
-            position: fixed; /* 변경된 부분 */
-            bottom: 0; /* 변경된 부분 */
-            left: 0; /* 변경된 부분 */
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
         }
 
         .share-button {
@@ -94,8 +104,14 @@
         }
 
         @media screen and (max-width: 768px) {
-            .meal-container {
-                flex-wrap: wrap;
+            .meal-section {
+                flex: 1 1 calc(50% - 20px);
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .meal-section {
+                flex: 1 1 100%;
             }
         }
     </style>
@@ -112,14 +128,17 @@
         <div class="meal-section" id="breakfastContainer">
             <h2>조식</h2>
             <p id="breakfastMenu"></p>
+            <p class="cal-info" id="breakfastCal"></p>
         </div>
         <div class="meal-section" id="lunchContainer">
             <h2>중식</h2>
             <p id="lunchMenu"></p>
+            <p class="cal-info" id="lunchCal"></p>
         </div>
         <div class="meal-section" id="dinnerContainer">
             <h2>석식</h2>
             <p id="dinnerMenu"></p>
+            <p class="cal-info" id="dinnerCal"></p>
         </div>
     </div>
     <script>
@@ -131,6 +150,9 @@
             const breakfastContainer = document.getElementById("breakfastMenu");
             const lunchContainer = document.getElementById("lunchMenu");
             const dinnerContainer = document.getElementById("dinnerMenu");
+            const breakfastCal = document.getElementById("breakfastCal");
+            const lunchCal = document.getElementById("lunchCal");
+            const dinnerCal = document.getElementById("dinnerCal");
 
             // Fetch menu data from the API
             fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=1`)
@@ -139,8 +161,11 @@
                     const parser = new DOMParser();
                     const xml = parser.parseFromString(data, "text/xml");
                     const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 조식이 없습니다...";
+                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
                     breakfastContainer.innerHTML = menuText;
+                    const calElement = xml.querySelector("CAL_INFO");
+                    const calText = calElement ? calElement.textContent : "";
+                    breakfastCal.textContent = calText;
                 })
                 .catch(error => {
                     console.error(error);
@@ -153,8 +178,11 @@
                     const parser = new DOMParser();
                     const xml = parser.parseFromString(data, "text/xml");
                     const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 중식이 없습니다...";
+                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
                     lunchContainer.innerHTML = menuText;
+                    const calElement = xml.querySelector("CAL_INFO");
+                    const calText = calElement ? calElement.textContent : "";
+                    lunchCal.textContent = calText;
                 })
                 .catch(error => {
                     console.error(error);
@@ -167,8 +195,11 @@
                     const parser = new DOMParser();
                     const xml = parser.parseFromString(data, "text/xml");
                     const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 석식이 없습니다...";
+                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
                     dinnerContainer.innerHTML = menuText;
+                    const calElement = xml.querySelector("CAL_INFO");
+                    const calText = calElement ? calElement.textContent : "";
+                    dinnerCal.textContent = calText;
                 })
                 .catch(error => {
                     console.error(error);
