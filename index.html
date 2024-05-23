@@ -46,6 +46,13 @@
             border-bottom: 5px solid #7f7f7f;
         }
 
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: inherit;
+        }
+
         input[type="date"] {
             border: 2px solid #ffa07a;
             border-radius: 10px;
@@ -57,7 +64,6 @@
             color: #333;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            margin-top: 20px;
         }
 
         body.dark-theme input[type="date"] {
@@ -144,7 +150,9 @@
             border-radius: 20px;
             padding: 10px 20px;
             cursor: pointer;
-            margin-top: 10px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s ease;
         }
@@ -236,13 +244,20 @@
             .meal-section {
                 flex: 1 1 100%;
             }
+
+            .share-button {
+                top: 70px;
+            }
         }
     </style>
 </head>
 
 <body class="light-theme">
     <h1>성진이의 단양고등학교 급식 사이트</h1>
-    <input type="date" id="date" name="date" value="">
+    <div>
+        <label for="date">날짜 선택</label>
+        <input type="date" id="date" name="date" value="">
+    </div>
     <button class="share-button" onclick="shareMenu()">급식 공유하기</button>
     <div class="theme-switch">
         <input type="checkbox" id="theme-switch-checkbox" onchange="toggleTheme()">
