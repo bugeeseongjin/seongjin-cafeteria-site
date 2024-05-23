@@ -40,6 +40,12 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
+        body.dark-theme h1 {
+            background-color: #4f4f4f;
+            color: #fef7e6;
+            border-bottom: 5px solid #7f7f7f;
+        }
+
         label {
             display: block;
             font-weight: bold;
@@ -60,10 +66,23 @@
             transition: all 0.3s ease;
         }
 
+        body.dark-theme input[type="date"] {
+            border-color: #7f7f7f;
+            background-color: #4f4f4f;
+            color: #fef7e6;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
         input[type="date"]:hover,
         input[type="date"]:focus {
             border-color: #ff7f50;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        body.dark-theme input[type="date"]:hover,
+        body.dark-theme input[type="date"]:focus {
+            border-color: #b36f50;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
         }
 
         .meal-container {
@@ -90,10 +109,20 @@
             transition: transform 0.3s ease, background-color 0.3s, color 0.3s;
         }
 
+        body.dark-theme .meal-section {
+            background-color: #4f4f4f;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+            color: #fef7e6;
+        }
+
         .meal-section h2 {
             margin-top: 0;
             color: #ff6f61;
             transition: color 0.3s;
+        }
+
+        body.dark-theme .meal-section h2 {
+            color: #ff8c69;
         }
 
         .meal-section p {
@@ -108,6 +137,10 @@
             right: 10px;
             font-size: 12px;
             color: #888;
+        }
+
+        body.dark-theme .cal-info {
+            color: #bbb;
         }
 
         .share-button {
@@ -128,6 +161,15 @@
             background-color: #ff8c69;
         }
 
+        body.dark-theme .share-button {
+            background-color: #ff8c69;
+            color: #333;
+        }
+
+        body.dark-theme .share-button:hover {
+            background-color: #ffb3a7;
+        }
+
         .theme-switch {
             margin-top: 20px;
         }
@@ -137,17 +179,42 @@
         }
 
         .theme-switch label {
+            position: relative;
             display: inline-block;
-            background-color: #ffcccb;
-            border-radius: 20px;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
+            width: 60px;
+            height: 34px;
         }
 
-        .theme-switch input:checked + label {
+        .theme-switch label::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ffcccb;
+            border-radius: 34px;
+            transition: background-color 0.3s;
+        }
+
+        .theme-switch label::after {
+            content: "";
+            position: absolute;
+            left: 4px;
+            top: 4px;
+            width: 26px;
+            height: 26px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .theme-switch input:checked + label::before {
             background-color: #4f4f4f;
-            color: #fff;
+        }
+
+        .theme-switch input:checked + label::after {
+            transform: translateX(26px);
         }
 
         @media screen and (max-width: 768px) {
@@ -172,7 +239,7 @@
     <h1>성진이의 단양고등학교 급식 사이트</h1>
     <div class="theme-switch">
         <input type="checkbox" id="theme-switch-checkbox" onchange="toggleTheme()">
-        <label for="theme-switch-checkbox">Dark Mode</label>
+        <label for="theme-switch-checkbox"></label>
     </div>
     <div>
         <label for="date">날짜 선택</label>
