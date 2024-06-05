@@ -6,10 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>성진이의 단양고등학교 급식 사이트</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+        @font-face {
+            font-family: 'HakgyoansimBombanghakR';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimBombanghakR.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
 
         body {
-            font-family: 'Nunito', sans-serif;
+            font-family: 'HakgyoansimBombanghakR', sans-serif;
             margin: 0;
             padding: 0;
             text-align: center;
@@ -247,6 +252,7 @@
 
             .share-button {
                 top: 70px;
+                right: 10px;
             }
         }
     </style>
@@ -254,153 +260,135 @@
 
 <body class="light-theme">
     <h1>성진이의 단양고등학교 급식 사이트</h1>
+
     <div>
-        <span>날짜 선택</span>
-        <input type="date" id="date" name="date" value="">
+        <label for="date">급식 날짜 선택:</label>
+        <input type="date" id="date">
     </div>
-    <button class="share-button" onclick="shareMenu()">급식 공유하기</button>
+
     <div class="theme-switch">
-        <input type="checkbox" id="theme-switch-checkbox" onchange="toggleTheme()">
-        <label for="theme-switch-checkbox">
-            <svg class="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="5"></circle>
-                <line x1="12" y1="1" x2="12" y2="3"></line>
-                <line x1="12" y1="21" x2="12" y2="23"></line>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                <line x1="1" y1="12" x2="3" y2="12"></line>
-                <line x1="21" y1="12" x2="23" y2="12"></line>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        <input type="checkbox" id="theme-toggle">
+        <label for="theme-toggle">
+            <svg class="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffcccb">
+                <circle cx="12" cy="12" r="5" />
+                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M17.36 17.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M17.36 6.64l1.42-1.42" />
             </svg>
-            <svg class="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+            <svg class="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4f4f4f">
+                <path d="M12.76 2.79C9.9 2.35 7.16 3.05 5.02 4.77 2.88 6.5 1.76 9.06 2.01 11.71c.25 2.65 1.67 5 3.89 6.35 2.22 1.35 4.93 1.6 7.36.68 2.42-.92 4.33-2.83 5.25-5.25.92-2.42.67-5.14-.68-7.36-1.35-2.22-3.7-3.64-6.35-3.89a9.4 9.4 0 0 0-.72-.05zM12 0c.23 0 .45.01.68.02 3.02.25 5.76 1.7 7.79 3.89 2.03 2.19 3.23 5.05 3.45 8.11.21 3.07-.55 6.11-2.19 8.72-1.64 2.61-4.1 4.64-6.91 5.66-2.81 1.02-5.94 1.12-8.77.27-2.83-.85-5.36-2.68-7.07-5.02C-.33 18.22-.91 13.89.53 9.97 1.96 6.06 5.11 3.17 9 1.87 10.69 1.26 12.37.98 14 .98c.23 0 .45-.01.68-.02C14.55 0 14.27 0 14 0h-2zm.5 4a.5.5 0 1 0 0 1h.5a.5.5 0 0 0 0-1h-.5zm-1 0a.5.5 0 1 0 0 1h.5a.5.5 0 0 0 0-1h-.5z" />
             </svg>
         </label>
     </div>
+
     <div class="meal-container">
-        <div class="meal-section" id="breakfastContainer">
-            <h2>조식</h2>
-            <p id="breakfastMenu"></p>
-            <p class="cal-info" id="breakfastCal"></p>
+        <div class="meal-section" id="breakfast">
+            <h2>아침</h2>
+            <p>급식 데이터를 불러오는 중입니다...</p>
+            <p class="cal-info" id="breakfast-cal"></p>
+            <button class="share-button" onclick="shareMenu('아침')">공유</button>
         </div>
-        <div class="meal-section" id="lunchContainer">
-            <h2>중식</h2>
-            <p id="lunchMenu"></p>
-            <p class="cal-info" id="lunchCal"></p>
+        <div class="meal-section" id="lunch">
+            <h2>점심</h2>
+            <p>급식 데이터를 불러오는 중입니다...</p>
+            <p class="cal-info" id="lunch-cal"></p>
+            <button class="share-button" onclick="shareMenu('점심')">공유</button>
         </div>
-        <div class="meal-section" id="dinnerContainer">
-            <h2>석식</h2>
-            <p id="dinnerMenu"></p>
-            <p class="cal-info" id="dinnerCal"></p>
+        <div class="meal-section" id="dinner">
+            <h2>저녁</h2>
+            <p>급식 데이터를 불러오는 중입니다...</p>
+            <p class="cal-info" id="dinner-cal"></p>
+            <button class="share-button" onclick="shareMenu('저녁')">공유</button>
         </div>
     </div>
+
     <script>
-        const dateInput = document.getElementById("date");
+        document.addEventListener('DOMContentLoaded', function () {
+            const themeToggle = document.getElementById('theme-toggle');
+            const dateInput = document.getElementById('date');
+            const mealSections = {
+                '아침': document.getElementById('breakfast'),
+                '점심': document.getElementById('lunch'),
+                '저녁': document.getElementById('dinner')
+            };
 
-        const fetchMenu = () => {
-            const selectedDate = dateInput.value.split("-").join("");
-            const schoolCode = "8000040";
-            const breakfastContainer = document.getElementById("breakfastMenu");
-            const lunchContainer = document.getElementById("lunchMenu");
-            const dinnerContainer = document.getElementById("dinnerMenu");
-            const breakfastCal = document.getElementById("breakfastCal");
-            const lunchCal = document.getElementById("lunchCal");
-            const dinnerCal = document.getElementById("dinnerCal");
+            function applyTheme(theme) {
+                document.body.className = theme;
+            }
 
-            // Fetch menu data from the API
-            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=1`)
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(data, "text/xml");
-                    const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
-                    breakfastContainer.innerHTML = menuText;
-                    const calElement = xml.querySelector("CAL_INFO");
-                    const calText = calElement ? calElement.textContent : "";
-                    breakfastCal.textContent = calText;
-                })
-                .catch(error => {
-                    console.error(error);
-                    breakfastContainer.innerHTML = "An error occurred while fetching the menu.";
-                });
+            function loadTheme() {
+                const theme = localStorage.getItem('theme') || 'light-theme';
+                applyTheme(theme);
+                themeToggle.checked = theme === 'dark-theme';
+            }
 
-            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=2`)
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(data, "text/xml");
-                    const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
-                    lunchContainer.innerHTML = menuText;
-                    const calElement = xml.querySelector("CAL_INFO");
-                    const calText = calElement ? calElement.textContent : "";
-                    lunchCal.textContent = calText;
-                })
-                .catch(error => {
-                    console.error(error);
-                    lunchContainer.innerHTML = "An error occurred while fetching the menu.";
-                });
+            function saveTheme(theme) {
+                localStorage.setItem('theme', theme);
+            }
 
-            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=3`)
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(data, "text/xml");
-                    const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
-                    dinnerContainer.innerHTML = menuText;
-                    const calElement = xml.querySelector("CAL_INFO");
-                    const calText = calElement ? calElement.textContent : "";
-                    dinnerCal.textContent = calText;
-                })
-                .catch(error => {
-                    console.error(error);
-                    dinnerContainer.innerHTML = "An error occurred while fetching the menu.";
-                });
-        };
+            themeToggle.addEventListener('change', function () {
+                const theme = themeToggle.checked ? 'dark-theme' : 'light-theme';
+                applyTheme(theme);
+                saveTheme(theme);
+            });
 
-        const shareMenu = () => {
-            const selectedDate = dateInput.value;
-            const breakfastMenu = document.getElementById("breakfastMenu").innerText;
-            const lunchMenu = document.getElementById("lunchMenu").innerText;
-            const dinnerMenu = document.getElementById("dinnerMenu").innerText;
-            const breakfastCal = document.getElementById("breakfastCal").innerText;
-            const lunchCal = document.getElementById("lunchCal").innerText;
-            const dinnerCal = document.getElementById("dinnerCal").innerText;
-            const sharedText = `${selectedDate} 급식\n*조식*\n${breakfastMenu} (칼로리: ${breakfastCal})\n-------------------\n*중식*\n${lunchMenu} (칼로리: ${lunchCal})\n-------------------\n*석식*\n${dinnerMenu} (칼로리: ${dinnerCal})`;
-            navigator.clipboard.writeText(sharedText)
-                .then(() => alert("급식 정보가 클립보드에 복사되었습니다."))
-                .catch(error => console.error("복사 실패:", error));
-        };
+            function fetchMenus(date) {
+                const schoolCode = 'G100000170';
+                const apiUrl = `https://open.neis.go.kr/hub/mealServiceDietInfo?ATPT_OFCDC_SC_CODE=G10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${date}&Type=json`;
 
-        const toggleTheme = () => {
-            const body = document.body;
-            const isDarkTheme = body.classList.contains('dark-theme');
-            body.classList.toggle('dark-theme', !isDarkTheme);
-            body.classList.toggle('light-theme', isDarkTheme);
-            localStorage.setItem('theme', isDarkTheme ? 'light' : 'dark');
-        };
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.mealServiceDietInfo) {
+                            const meals = data.mealServiceDietInfo[1].row;
+                            meals.forEach(meal => {
+                                const mealType = meal.MMEAL_SC_NM;
+                                const menu = meal.DDISH_NM.replace(/<br\/>/g, '\n');
+                                const calories = meal.CAL_INFO;
+                                const section = mealSections[mealType];
+                                section.querySelector('p').textContent = menu;
+                                section.querySelector('.cal-info').textContent = `칼로리: ${calories}`;
+                            });
+                        } else {
+                            Object.values(mealSections).forEach(section => {
+                                section.querySelector('p').textContent = '급식 데이터가 없습니다.';
+                                section.querySelector('.cal-info').textContent = '';
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching meal data:', error);
+                        Object.values(mealSections).forEach(section => {
+                            section.querySelector('p').textContent = '급식 데이터를 불러오는 데 오류가 발생했습니다.';
+                            section.querySelector('.cal-info').textContent = '';
+                        });
+                    });
+            }
 
-        // Load theme from localStorage
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.body.classList.toggle('dark-theme', savedTheme === 'dark');
-        document.body.classList.toggle('light-theme', savedTheme === 'light');
-        document.getElementById('theme-switch-checkbox').checked = savedTheme === 'dark';
+            function shareMenu(mealType) {
+                const section = mealSections[mealType];
+                const menu = section.querySelector('p').textContent;
+                navigator.clipboard.writeText(`${mealType} 메뉴:\n${menu}`)
+                    .then(() => {
+                        alert(`${mealType} 메뉴가 클립보드에 복사되었습니다.`);
+                    })
+                    .catch(err => {
+                        console.error('Error copying to clipboard:', err);
+                    });
+            }
 
-        // Display today's date by default
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = (today.getMonth() + 1).toString().padStart(2, "0");
-        const day = today.getDate().toString().padStart(2, "0");
-        dateInput.value = `${year}-${month}-${day}`;
+            dateInput.addEventListener('change', function () {
+                const date = dateInput.value.replace(/-/g, '');
+                fetchMenus(date);
+            });
 
-        // Fetch menu when date changes
-        dateInput.addEventListener("change", fetchMenu);
+            function initialize() {
+                loadTheme();
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.value = today;
+                fetchMenus(today.replace(/-/g, ''));
+            }
 
-        // Fetch menu on page load
-        fetchMenu();
+            initialize();
+        });
     </script>
 </body>
 
