@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>성진이의 단양고등학교 급식 사이트</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
         @font-face {
             font-family: 'HakgyoansimBombanghakR';
             src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimBombanghakR.woff2') format('woff2');
@@ -252,7 +253,6 @@
 
             .share-button {
                 top: 70px;
-                right: 10px;
             }
         }
     </style>
@@ -260,135 +260,87 @@
 
 <body class="light-theme">
     <h1>성진이의 단양고등학교 급식 사이트</h1>
-
     <div>
-        <label for="date">급식 날짜 선택:</label>
-        <input type="date" id="date">
+        <span>날짜 선택</span>
+        <input type="date" id="date" name="date" value="">
     </div>
-
+    <button class="share-button" onclick="shareMenu()">급식 공유하기</button>
     <div class="theme-switch">
-        <input type="checkbox" id="theme-toggle">
-        <label for="theme-toggle">
-            <svg class="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffcccb">
-                <circle cx="12" cy="12" r="5" />
-                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M17.36 17.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M17.36 6.64l1.42-1.42" />
+        <input type="checkbox" id="theme-switch-checkbox" onchange="toggleTheme()">
+        <label for="theme-switch-checkbox">
+            <svg class="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
             </svg>
-            <svg class="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4f4f4f">
-                <path d="M12.76 2.79C9.9 2.35 7.16 3.05 5.02 4.77 2.88 6.5 1.76 9.06 2.01 11.71c.25 2.65 1.67 5 3.89 6.35 2.22 1.35 4.93 1.6 7.36.68 2.42-.92 4.33-2.83 5.25-5.25.92-2.42.67-5.14-.68-7.36-1.35-2.22-3.7-3.64-6.35-3.89a9.4 9.4 0 0 0-.72-.05zM12 0c.23 0 .45.01.68.02 3.02.25 5.76 1.7 7.79 3.89 2.03 2.19 3.23 5.05 3.45 8.11.21 3.07-.55 6.11-2.19 8.72-1.64 2.61-4.1 4.64-6.91 5.66-2.81 1.02-5.94 1.12-8.77.27-2.83-.85-5.36-2.68-7.07-5.02C-.33 18.22-.91 13.89.53 9.97 1.96 6.06 5.11 3.17 9 1.87 10.69 1.26 12.37.98 14 .98c.23 0 .45-.01.68-.02C14.55 0 14.27 0 14 0h-2zm.5 4a.5.5 0 1 0 0 1h.5a.5.5 0 0 0 0-1h-.5zm-1 0a.5.5 0 1 0 0 1h.5a.5.5 0 0 0 0-1h-.5z" />
+            <svg class="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
             </svg>
         </label>
     </div>
-
     <div class="meal-container">
         <div class="meal-section" id="breakfast">
             <h2>아침</h2>
-            <p>급식 데이터를 불러오는 중입니다...</p>
-            <p class="cal-info" id="breakfast-cal"></p>
-            <button class="share-button" onclick="shareMenu('아침')">공유</button>
+            <p class="meal-description">Loading...</p>
+            <div class="cal-info">Calories: <span class="calories"></span></div>
         </div>
         <div class="meal-section" id="lunch">
             <h2>점심</h2>
-            <p>급식 데이터를 불러오는 중입니다...</p>
-            <p class="cal-info" id="lunch-cal"></p>
-            <button class="share-button" onclick="shareMenu('점심')">공유</button>
+            <p class="meal-description">Loading...</p>
+            <div class="cal-info">Calories: <span class="calories"></span></div>
         </div>
         <div class="meal-section" id="dinner">
             <h2>저녁</h2>
-            <p>급식 데이터를 불러오는 중입니다...</p>
-            <p class="cal-info" id="dinner-cal"></p>
-            <button class="share-button" onclick="shareMenu('저녁')">공유</button>
+            <p class="meal-description">Loading...</p>
+            <div class="cal-info">Calories: <span class="calories"></span></div>
         </div>
     </div>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const themeToggle = document.getElementById('theme-toggle');
-            const dateInput = document.getElementById('date');
-            const mealSections = {
-                '아침': document.getElementById('breakfast'),
-                '점심': document.getElementById('lunch'),
-                '저녁': document.getElementById('dinner')
-            };
-
-            function applyTheme(theme) {
-                document.body.className = theme;
-            }
-
-            function loadTheme() {
-                const theme = localStorage.getItem('theme') || 'light-theme';
-                applyTheme(theme);
-                themeToggle.checked = theme === 'dark-theme';
-            }
-
-            function saveTheme(theme) {
-                localStorage.setItem('theme', theme);
-            }
-
-            themeToggle.addEventListener('change', function () {
-                const theme = themeToggle.checked ? 'dark-theme' : 'light-theme';
-                applyTheme(theme);
-                saveTheme(theme);
-            });
-
-            function fetchMenus(date) {
-                const schoolCode = 'G100000170';
-                const apiUrl = `https://open.neis.go.kr/hub/mealServiceDietInfo?ATPT_OFCDC_SC_CODE=G10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${date}&Type=json`;
-
-                fetch(apiUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.mealServiceDietInfo) {
-                            const meals = data.mealServiceDietInfo[1].row;
-                            meals.forEach(meal => {
-                                const mealType = meal.MMEAL_SC_NM;
-                                const menu = meal.DDISH_NM.replace(/<br\/>/g, '\n');
-                                const calories = meal.CAL_INFO;
-                                const section = mealSections[mealType];
-                                section.querySelector('p').textContent = menu;
-                                section.querySelector('.cal-info').textContent = `칼로리: ${calories}`;
-                            });
-                        } else {
-                            Object.values(mealSections).forEach(section => {
-                                section.querySelector('p').textContent = '급식 데이터가 없습니다.';
-                                section.querySelector('.cal-info').textContent = '';
-                            });
+        function fetchMenu(date) {
+            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=ae971e01cf5f40168c1b2584f03ae3f2&Type=json&pIndex=1&pSize=10&ATPT_OFCDC_SC_CODE=G10&SD_SCHUL_CODE=7430310&MLSV_YMD=${date}`)
+                .then(response => response.json())
+                .then(data => {
+                    const meals = data.mealServiceDietInfo[1].row;
+                    const mealTypes = { "조식": "breakfast", "중식": "lunch", "석식": "dinner" };
+                    meals.forEach(meal => {
+                        const mealType = meal.MMEAL_SC_NM;
+                        const mealElementId = mealTypes[mealType];
+                        const mealElement = document.getElementById(mealElementId);
+                        if (mealElement) {
+                            mealElement.querySelector(".meal-description").textContent = meal.DDISH_NM.replace(/\s+/g, ' ');
+                            mealElement.querySelector(".calories").textContent = meal.CAL_INFO;
                         }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching meal data:', error);
-                        Object.values(mealSections).forEach(section => {
-                            section.querySelector('p').textContent = '급식 데이터를 불러오는 데 오류가 발생했습니다.';
-                            section.querySelector('.cal-info').textContent = '';
-                        });
                     });
-            }
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
 
-            function shareMenu(mealType) {
-                const section = mealSections[mealType];
-                const menu = section.querySelector('p').textContent;
-                navigator.clipboard.writeText(`${mealType} 메뉴:\n${menu}`)
-                    .then(() => {
-                        alert(`${mealType} 메뉴가 클립보드에 복사되었습니다.`);
-                    })
-                    .catch(err => {
-                        console.error('Error copying to clipboard:', err);
-                    });
-            }
-
-            dateInput.addEventListener('change', function () {
-                const date = dateInput.value.replace(/-/g, '');
-                fetchMenus(date);
-            });
-
-            function initialize() {
-                loadTheme();
-                const today = new Date().toISOString().split('T')[0];
-                dateInput.value = today;
-                fetchMenus(today.replace(/-/g, ''));
-            }
-
-            initialize();
+        document.getElementById('date').addEventListener('change', (event) => {
+            const selectedDate = event.target.value.replace(/-/g, '');
+            fetchMenu(selectedDate);
         });
+
+        function shareMenu() {
+            const date = document.getElementById('date').value;
+            const breakfast = document.getElementById('breakfast').querySelector('.meal-description').textContent;
+            const lunch = document.getElementById('lunch').querySelector('.meal-description').textContent;
+            const dinner = document.getElementById('dinner').querySelector('.meal-description').textContent;
+            const shareText = `날짜: ${date}\n\n아침:\n${breakfast}\n\n점심:\n${lunch}\n\n저녁:\n${dinner}`;
+            navigator.share({
+                title: '단양고등학교 급식 메뉴',
+                text: shareText,
+            });
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
     </script>
 </body>
 
