@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>성진이의 단양고등학교 급식 사이트</title>
     <style>
+
         @font-face {
-            font-family: 'HakgyoansimBombanghakR';
+            font-family: 'HakgyoansimBombanghakR'; 
             src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimBombanghakR.woff2') format('woff2');
             font-weight: normal;
             font-style: normal;
         }
-
         body {
             font-family: 'HakgyoansimBombanghakR', sans-serif;
             margin: 0;
@@ -279,42 +279,133 @@
                 <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
             </svg>
             <svg class="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 001.43 13.76 7 7 0 007.36-4.68z"></path>
+                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
             </svg>
         </label>
     </div>
     <div class="meal-container">
-        <div class="meal-section" id="breakfast">
-            <h2>아침</h2>
-            <p>아침 식단 정보</p>
-            <div class="cal-info">칼로리 정보</div>
+        <div class="meal-section" id="breakfastContainer">
+            <h2>조식</h2>
+            <p id="breakfastMenu"></p>
+            <p class="cal-info" id="breakfastCal"></p>
         </div>
-        <div class="meal-section" id="lunch">
-            <h2>점심</h2>
-            <p>점심 식단 정보</p>
-            <div class="cal-info">칼로리 정보</div>
+        <div class="meal-section" id="lunchContainer">
+            <h2>중식</h2>
+            <p id="lunchMenu"></p>
+            <p class="cal-info" id="lunchCal"></p>
         </div>
-        <div class="meal-section" id="dinner">
-            <h2>저녁</h2>
-            <p>저녁 식단 정보</p>
-            <div class="cal-info">칼로리 정보</div>
+        <div class="meal-section" id="dinnerContainer">
+            <h2>석식</h2>
+            <p id="dinnerMenu"></p>
+            <p class="cal-info" id="dinnerCal"></p>
         </div>
     </div>
     <script>
-        document.getElementById('date').addEventListener('change', function () {
-            // 여기에 날짜 선택 시 작동할 JavaScript 코드를 추가합니다.
-        });
+        const dateInput = document.getElementById("date");
 
-        function shareMenu() {
-            // 여기에 급식 정보를 공유하는 기능을 추가합니다.
-        }
+        const fetchMenu = () => {
+            const selectedDate = dateInput.value.split("-").join("");
+            const schoolCode = "8000040";
+            const breakfastContainer = document.getElementById("breakfastMenu");
+            const lunchContainer = document.getElementById("lunchMenu");
+            const dinnerContainer = document.getElementById("dinnerMenu");
+            const breakfastCal = document.getElementById("breakfastCal");
+            const lunchCal = document.getElementById("lunchCal");
+            const dinnerCal = document.getElementById("dinnerCal");
 
-        function toggleTheme() {
+            // Fetch menu data from the API
+            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=1`)
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(data, "text/xml");
+                    const menuElement = xml.querySelector("DDISH_NM");
+                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
+                    breakfastContainer.innerHTML = menuText;
+                    const calElement = xml.querySelector("CAL_INFO");
+                    const calText = calElement ? calElement.textContent : "";
+                    breakfastCal.textContent = calText;
+                })
+                .catch(error => {
+                    console.error(error);
+                    breakfastContainer.innerHTML = "An error occurred while fetching the menu.";
+                });
+
+            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=2`)
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(data, "text/xml");
+                    const menuElement = xml.querySelector("DDISH_NM");
+                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
+                    lunchContainer.innerHTML = menuText;
+                    const calElement = xml.querySelector("CAL_INFO");
+                    const calText = calElement ? calElement.textContent : "";
+                    lunchCal.textContent = calText;
+                })
+                .catch(error => {
+                    console.error(error);
+                    lunchContainer.innerHTML = "An error occurred while fetching the menu.";
+                });
+
+            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=3`)
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const xml = parser.parseFromString(data, "text/xml");
+                    const menuElement = xml.querySelector("DDISH_NM");
+                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
+                    dinnerContainer.innerHTML = menuText;
+                    const calElement = xml.querySelector("CAL_INFO");
+                    const calText = calElement ? calElement.textContent : "";
+                    dinnerCal.textContent = calText;
+                })
+                .catch(error => {
+                    console.error(error);
+                    dinnerContainer.innerHTML = "An error occurred while fetching the menu.";
+                });
+        };
+
+        const shareMenu = () => {
+            const selectedDate = dateInput.value;
+            const breakfastMenu = document.getElementById("breakfastMenu").innerText;
+            const lunchMenu = document.getElementById("lunchMenu").innerText;
+            const dinnerMenu = document.getElementById("dinnerMenu").innerText;
+            const breakfastCal = document.getElementById("breakfastCal").innerText;
+            const lunchCal = document.getElementById("lunchCal").innerText;
+            const dinnerCal = document.getElementById("dinnerCal").innerText;
+            const sharedText = `${selectedDate} 급식\n*조식*\n${breakfastMenu} (칼로리: ${breakfastCal})\n-------------------\n*중식*\n${lunchMenu} (칼로리: ${lunchCal})\n-------------------\n*석식*\n${dinnerMenu} (칼로리: ${dinnerCal})`;
+            navigator.clipboard.writeText(sharedText)
+                .then(() => alert("급식 정보가 클립보드에 복사되었습니다."))
+                .catch(error => console.error("복사 실패:", error));
+        };
+
+        const toggleTheme = () => {
             const body = document.body;
-            const isLightTheme = body.classList.contains('light-theme');
-            body.classList.toggle('light-theme', !isLightTheme);
-            body.classList.toggle('dark-theme', isLightTheme);
-        }
+            const isDarkTheme = body.classList.contains('dark-theme');
+            body.classList.toggle('dark-theme', !isDarkTheme);
+            body.classList.toggle('light-theme', isDarkTheme);
+            localStorage.setItem('theme', isDarkTheme ? 'light' : 'dark');
+        };
+
+        // Load theme from localStorage
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.classList.toggle('dark-theme', savedTheme === 'dark');
+        document.body.classList.toggle('light-theme', savedTheme === 'light');
+        document.getElementById('theme-switch-checkbox').checked = savedTheme === 'dark';
+
+        // Display today's date by default
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = (today.getMonth() + 1).toString().padStart(2, "0");
+        const day = today.getDate().toString().padStart(2, "0");
+        dateInput.value = `${year}-${month}-${day}`;
+
+        // Fetch menu when date changes
+        dateInput.addEventListener("change", fetchMenu);
+
+        // Fetch menu on page load
+        fetchMenu();
     </script>
 </body>
 
