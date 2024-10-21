@@ -374,7 +374,7 @@
             const breakfastCal = document.getElementById("breakfastCal").innerText;
             const lunchCal = document.getElementById("lunchCal").innerText;
             const dinnerCal = document.getElementById("dinnerCal").innerText;
-            const sharedText = `${selectedDate} 급식\n*조식*\n${breakfastMenu} (칼로리: ${breakfastCal})\n-------------------\n*중식*\n${lunchMenu} (칼로리: ${lunchCal})\n-------------------\n*석식*\n${dinnerMenu} (칼로리: ${dinnerCal})`;
+            const sharedText = `${selectedDate} 급식\n*조식*\n${breakfastMenu} (칼로리: ${breakfastCal})\n-------------------\n*중식*\n${lunchMenu} (칼로리: ${lunchCal})\n-------------------\n*석식*\n${dinnerMenu} (칼로리: ${dinnerCal})\n\nPowered By https://seongjin-cafeteria-site.netlify.app`;
             navigator.clipboard.writeText(sharedText)
                 .then(() => alert("급식 정보가 클립보드에 복사되었습니다."))
                 .catch(error => console.error("복사 실패:", error));
