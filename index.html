@@ -313,68 +313,42 @@
             const lunchCal = document.getElementById("lunchCal");
             const dinnerCal = document.getElementById("dinnerCal");
 
-            // Fetch menu data from the API
-            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=1`)
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(data, "text/xml");
-                    const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
-                    breakfastContainer.innerHTML = menuText;
-                    const calElement = xml.querySelector("CAL_INFO");
-                    const calText = calElement ? calElement.textContent : "";
-                    breakfastCal.textContent = calText;
-                })
-                .catch(error => {
-                    console.error(error);
-                    breakfastContainer.innerHTML = "An error occurred while fetching the menu.";
-                });
+            // Helper function to update meal section
+            const updateMealSection = (mealType, container, calContainer) => {
+                fetch(`/.netlify/functions/fetch-meal-data?date=${selectedDate}&schoolCode=${schoolCode}&mealType=${mealType}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // The Netlify function returns menuText with \n, so use innerText for proper rendering
+                        container.innerText = data.menuText || "선택한 날짜의 급식이 없습니다...";
+                        calContainer.textContent = data.calText || "";
+                    })
+                    .catch(error => {
+                        console.error('Error fetching menu for meal type ' + mealType + ':', error);
+                        container.innerText = "급식 정보를 가져오는 중 오류가 발생했습니다.";
+                        calContainer.textContent = "";
+                    });
+            };
 
-            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=2`)
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(data, "text/xml");
-                    const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
-                    lunchContainer.innerHTML = menuText;
-                    const calElement = xml.querySelector("CAL_INFO");
-                    const calText = calElement ? calElement.textContent : "";
-                    lunchCal.textContent = calText;
-                })
-                .catch(error => {
-                    console.error(error);
-                    lunchContainer.innerHTML = "An error occurred while fetching the menu.";
-                });
-
-            fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=3`)
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const xml = parser.parseFromString(data, "text/xml");
-                    const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
-                    dinnerContainer.innerHTML = menuText;
-                    const calElement = xml.querySelector("CAL_INFO");
-                    const calText = calElement ? calElement.textContent : "";
-                    dinnerCal.textContent = calText;
-                })
-                .catch(error => {
-                    console.error(error);
-                    dinnerContainer.innerHTML = "An error occurred while fetching the menu.";
-                });
+            // Fetch and update breakfast, lunch, and dinner
+            updateMealSection("1", breakfastContainer, breakfastCal); // 1 for Breakfast
+            updateMealSection("2", lunchContainer, lunchCal);     // 2 for Lunch
+            updateMealSection("3", dinnerContainer, dinnerCal);     // 3 for Dinner
         };
 
         const shareMenu = () => {
             const selectedDate = dateInput.value;
-            const breakfastMenu = document.getElementById("breakfastMenu").innerText;
+            const breakfastMenu = document.getElementById("breakfastMenu").innerText; // innerText to get formatted text
             const lunchMenu = document.getElementById("lunchMenu").innerText;
             const dinnerMenu = document.getElementById("dinnerMenu").innerText;
             const breakfastCal = document.getElementById("breakfastCal").innerText;
             const lunchCal = document.getElementById("lunchCal").innerText;
             const dinnerCal = document.getElementById("dinnerCal").innerText;
-            const sharedText = `${selectedDate} 급식\n*조식*\n${breakfastMenu} (칼로리: ${breakfastCal})\n-------------------\n*중식*\n${lunchMenu} (칼로리: ${lunchCal})\n-------------------\n*석식*\n${dinnerMenu} (칼로리: ${dinnerCal})\n\nPowered By https://seongjin-cafeteria-site.netlify.app`;
+            const sharedText = `${selectedDate} 급식\n*조식*\n${breakfastMenu}\n(칼로리: ${breakfastCal})\n-------------------\n*중식*\n${lunchMenu}\n(칼로리: ${lunchCal})\n-------------------\n*석식*\n${dinnerMenu}\n(칼로리: ${dinnerCal})\n\nPowered By https://seongjin-cafeteria-site.netlify.app`;
             navigator.clipboard.writeText(sharedText)
                 .then(() => alert("급식 정보가 클립보드에 복사되었습니다."))
                 .catch(error => console.error("복사 실패:", error));

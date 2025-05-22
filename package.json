@@ -1,0 +1,15 @@
+{
+  "name": "seongjin-cafeteria-site",
+  "version": "1.0.0",
+  "description": "Website to display Danyang High School cafeteria menus.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0",
+    "xml2js": "^0.6.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
