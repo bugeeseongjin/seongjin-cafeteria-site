@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>성진이의 단양고등학교 급식 사이트</title>
     <style>
-
         @font-face {
-            font-family: 'HakgyoansimBombanghakR'; 
+            font-family: 'HakgyoansimBombanghakR';
             src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimBombanghakR.woff2') format('woff2');
             font-weight: normal;
             font-style: 20px;
@@ -23,73 +21,57 @@
             min-height: 100vh;
             transition: background-color 0.3s, color 0.3s;
         }
-
         body.light-theme {
-            background-color: #fef7e6;
-            color: #333;
+            background-color: #ffffff;
+            color: #333333;
         }
-
         body.dark-theme {
-            background-color: #333;
-            color: #fef7e6;
+            background-color: #e0e0e0;
+            color: #666666;
         }
-
         h1 {
-            background-color: #ffcccb;
-            color: #fff;
+            background-color: #ffffff;
+            color: #333333;
             margin: 0;
             padding: 20px;
             width: 100%;
             box-sizing: border-box;
-            border-bottom: 5px solid #ffa07a;
+            border-bottom: 3px solid #cccccc;
             transition: background-color 0.3s, color 0.3s;
         }
-
         body.dark-theme h1 {
-            background-color: #4f4f4f;
-            color: #fef7e6;
-            border-bottom: 5px solid #7f7f7f;
+            background-color: #f5f5f5;
+            color: #555555;
+            border-bottom: 3px solid #bbbbbb;
         }
-
         label {
             display: block;
             font-weight: bold;
             margin-bottom: 10px;
             color: inherit;
         }
-
         input[type="date"] {
-            border: 2px solid #ffa07a;
-            border-radius: 10px;
+            border: 2px solid #cccccc;
+            border-radius: 6px;
             font-size: 16px;
             padding: 8px;
             width: 90%;
             max-width: 300px;
-            background-color: #fff;
-            color: #333;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            color: #333333;
             transition: all 0.3s ease;
         }
-
         body.dark-theme input[type="date"] {
-            border-color: #7f7f7f;
-            background-color: #4f4f4f;
-            color: #fef7e6;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            border-color: #bbbbbb;
+            background-color: #f0f0f0;
+            color: #666666;
         }
-
         input[type="date"]:hover,
-        input[type="date"]:focus {
-            border-color: #ff7f50;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
+        input[type="date"]:focus,
         body.dark-theme input[type="date"]:hover,
         body.dark-theme input[type="date"]:focus {
-            border-color: #b36f50;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+            border-color: #999999;
         }
-
         .meal-container {
             display: flex;
             flex-wrap: wrap;
@@ -99,97 +81,75 @@
             box-sizing: border-box;
             flex-grow: 1;
         }
-
         .meal-section {
             flex: 1 1 calc(33.33% - 20px);
             margin: 10px;
-            border-radius: 20px;
+            border-radius: 12px;
             padding: 20px;
             text-align: center;
-            background-color: #fff;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
             min-width: 200px;
             min-height: 200px;
             position: relative;
             transition: transform 0.3s ease, background-color 0.3s, color 0.3s;
         }
-
         body.dark-theme .meal-section {
-            background-color: #4f4f4f;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
-            color: #fef7e6;
+            background-color: #f5f5f5;
+            color: #555555;
         }
-
         .meal-section h2 {
             margin-top: 0;
-            color: #ff6f61;
+            color: #333333;
             transition: color 0.3s;
         }
-
         body.dark-theme .meal-section h2 {
-            color: #ff8c69;
+            color: #555555;
         }
-
         .meal-section p {
-            margin-top: 23px;
+            margin-top: 20px;
             color: inherit;
             transition: color 0.3s;
         }
-
         .cal-info {
             position: absolute;
             bottom: 10px;
             right: 10px;
-            font-size: 16px;
-            color: #888;
+            font-size: 14px;
+            color: #888888;
         }
-
         body.dark-theme .cal-info {
-            color: #bbb;
+            color: #777777;
         }
-
         .share-button {
-            background-color: #ff6f61;
-            color: #fff;
+            background-color: #cccccc;
+            color: #333333;
             border: none;
-            border-radius: 20px;
+            border-radius: 12px;
             padding: 10px 20px;
             cursor: pointer;
             position: absolute;
             top: 20px;
             right: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s ease;
         }
-
         .share-button:hover {
-            background-color: #ff8c69;
+            background-color: #bbbbbb;
         }
-
-        body.dark-theme .share-button {
-            background-color: #ff8c69;
-            color: #333;
-        }
-
         body.dark-theme .share-button:hover {
-            background-color: #ffb3a7;
+            background-color: #aaaaaa;
         }
-
         .theme-switch {
             margin-top: 20px;
         }
-
         .theme-switch input {
             display: none;
         }
-
         .theme-switch label {
             position: relative;
             display: inline-block;
             width: 60px;
             height: 34px;
         }
-
         .theme-switch label::before {
             content: "";
             position: absolute;
@@ -197,11 +157,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ffcccb;
+            background-color: #cccccc;
             border-radius: 34px;
             transition: background-color 0.3s;
         }
-
         .theme-switch label::after {
             content: "";
             position: absolute;
@@ -209,19 +168,16 @@
             top: 4px;
             width: 26px;
             height: 26px;
-            background-color: #fff;
+            background-color: #ffffff;
             border-radius: 50%;
             transition: transform 0.3s;
         }
-
         .theme-switch input:checked + label::before {
-            background-color: #4f4f4f;
+            background-color: #e0e0e0;
         }
-
         .theme-switch input:checked + label::after {
             transform: translateX(26px);
         }
-
         .theme-switch label svg {
             position: absolute;
             top: 50%;
@@ -230,33 +186,17 @@
             height: 20px;
             transition: fill 0.3s;
         }
-
-        .theme-switch label svg.sun {
-            left: 8px;
-        }
-
-        .theme-switch label svg.moon {
-            right: 8px;
-        }
-
+        .theme-switch label svg.sun { left: 8px; }
+        .theme-switch label svg.moon { right: 8px; }
         @media screen and (max-width: 768px) {
-            .meal-section {
-                flex: 1 1 calc(50% - 20px);
-            }
+            .meal-section { flex: 1 1 calc(50% - 20px); }
         }
-
         @media screen and (max-width: 480px) {
-            .meal-section {
-                flex: 1 1 100%;
-            }
-
-            .share-button {
-                top: 70px;
-            }
+            .meal-section { flex: 1 1 100%; }
+            .share-button { top: 70px; }
         }
     </style>
 </head>
-
 <body class="light-theme">
     <h1>성진이의 단양고등학교 급식 사이트</h1>
     <div>
@@ -302,7 +242,6 @@
     </div>
     <script>
         const dateInput = document.getElementById("date");
-
         const fetchMenu = () => {
             const selectedDate = dateInput.value.split("-").join("");
             const schoolCode = "8000040";
@@ -312,60 +251,35 @@
             const breakfastCal = document.getElementById("breakfastCal");
             const lunchCal = document.getElementById("lunchCal");
             const dinnerCal = document.getElementById("dinnerCal");
-
-            // Fetch menu data from the API
             fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=1`)
                 .then(response => response.text())
                 .then(data => {
                     const parser = new DOMParser();
                     const xml = parser.parseFromString(data, "text/xml");
                     const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
-                    breakfastContainer.innerHTML = menuText;
-                    const calElement = xml.querySelector("CAL_INFO");
-                    const calText = calElement ? calElement.textContent : "";
-                    breakfastCal.textContent = calText;
+                    breakfastContainer.innerHTML = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
+                    breakfastCal.textContent = xml.querySelector("CAL_INFO")?.textContent || "";
                 })
-                .catch(error => {
-                    console.error(error);
-                    breakfastContainer.innerHTML = "An error occurred while fetching the menu.";
-                });
-
+                .catch(() => breakfastContainer.innerHTML = "An error occurred while fetching the menu.");
             fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=2`)
                 .then(response => response.text())
                 .then(data => {
                     const parser = new DOMParser();
                     const xml = parser.parseFromString(data, "text/xml");
-                    const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
-                    lunchContainer.innerHTML = menuText;
-                    const calElement = xml.querySelector("CAL_INFO");
-                    const calText = calElement ? calElement.textContent : "";
-                    lunchCal.textContent = calText;
+                    lunchContainer.innerHTML = xml.querySelector("DDISH_NM")?.textContent || "선택한 날짜의 급식이 없습니다...";
+                    lunchCal.textContent = xml.querySelector("CAL_INFO")?.textContent || "";
                 })
-                .catch(error => {
-                    console.error(error);
-                    lunchContainer.innerHTML = "An error occurred while fetching the menu.";
-                });
-
+                .catch(() => lunchContainer.innerHTML = "An error occurred while fetching the menu.");
             fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=3`)
                 .then(response => response.text())
                 .then(data => {
                     const parser = new DOMParser();
                     const xml = parser.parseFromString(data, "text/xml");
-                    const menuElement = xml.querySelector("DDISH_NM");
-                    const menuText = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
-                    dinnerContainer.innerHTML = menuText;
-                    const calElement = xml.querySelector("CAL_INFO");
-                    const calText = calElement ? calElement.textContent : "";
-                    dinnerCal.textContent = calText;
+                    dinnerContainer.innerHTML = xml.querySelector("DDISH_NM")?.textContent || "선택한 날짜의 급식이 없습니다...";
+                    dinnerCal.textContent = xml.querySelector("CAL_INFO")?.textContent || "";
                 })
-                .catch(error => {
-                    console.error(error);
-                    dinnerContainer.innerHTML = "An error occurred while fetching the menu.";
-                });
+                .catch(() => dinnerContainer.innerHTML = "An error occurred while fetching the menu.");
         };
-
         const shareMenu = () => {
             const selectedDate = dateInput.value;
             const breakfastMenu = document.getElementById("breakfastMenu").innerText;
@@ -376,37 +290,23 @@
             const dinnerCal = document.getElementById("dinnerCal").innerText;
             const sharedText = `${selectedDate} 급식\n*조식*\n${breakfastMenu} (칼로리: ${breakfastCal})\n-------------------\n*중식*\n${lunchMenu} (칼로리: ${lunchCal})\n-------------------\n*석식*\n${dinnerMenu} (칼로리: ${dinnerCal})\n\nPowered By https://seongjin-cafeteria-site.netlify.app`;
             navigator.clipboard.writeText(sharedText)
-                .then(() => alert("급식 정보가 클립보드에 복사되었습니다."))
-                .catch(error => console.error("복사 실패:", error));
+                .then(() => alert("급식 정보가 클립보드에 복사되었습니다."));
         };
-
         const toggleTheme = () => {
             const body = document.body;
-            const isDarkTheme = body.classList.contains('dark-theme');
-            body.classList.toggle('dark-theme', !isDarkTheme);
-            body.classList.toggle('light-theme', isDarkTheme);
-            localStorage.setItem('theme', isDarkTheme ? 'light' : 'dark');
+            const isDark = body.classList.contains('dark-theme');
+            body.classList.toggle('dark-theme', !isDark);
+            body.classList.toggle('light-theme', isDark);
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
         };
-
-        // Load theme from localStorage
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.body.classList.toggle('dark-theme', savedTheme === 'dark');
-        document.body.classList.toggle('light-theme', savedTheme === 'light');
-        document.getElementById('theme-switch-checkbox').checked = savedTheme === 'dark';
-
-        // Display today's date by default
+        const saved = localStorage.getItem('theme') || 'light';
+        document.body.classList.toggle('dark-theme', saved === 'dark');
+        document.body.classList.toggle('light-theme', saved === 'light');
+        document.getElementById('theme-switch-checkbox').checked = saved === 'dark';
         const today = new Date();
-        const year = today.getFullYear();
-        const month = (today.getMonth() + 1).toString().padStart(2, "0");
-        const day = today.getDate().toString().padStart(2, "0");
-        dateInput.value = `${year}-${month}-${day}`;
-
-        // Fetch menu when date changes
+        dateInput.value = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
         dateInput.addEventListener("change", fetchMenu);
-
-        // Fetch menu on page load
         fetchMenu();
     </script>
 </body>
-
 </html>
