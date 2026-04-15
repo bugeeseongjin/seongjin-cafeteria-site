@@ -257,6 +257,11 @@
     </div>
     <script>
         const dateInput = document.getElementById("date");
+        // 알레르기 정보 제거 함수: (숫자.숫자...) 패턴과 그 앞의 공백을 제거
+        const removeAllergyInfo = (text) => {
+            if (!text) return text;
+            return text.replace(/\s*\(\d+(\.\d+)*\)/g, '');
+        };
         const fetchMenu = () => {
             const selectedDate = dateInput.value.split("-").join("");
             const schoolCode = "8000040";
@@ -272,7 +277,8 @@
                     const parser = new DOMParser();
                     const xml = parser.parseFromString(data, "text/xml");
                     const menuElement = xml.querySelector("DDISH_NM");
-                    breakfastContainer.innerHTML = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
+                    const rawMenu = menuElement ? menuElement.textContent : "선택한 날짜의 급식이 없습니다...";
+                    breakfastContainer.innerHTML = removeAllergyInfo(rawMenu);
                     breakfastCal.textContent = xml.querySelector("CAL_INFO")?.textContent || "";
                 })
                 .catch(() => breakfastContainer.innerHTML = "An error occurred while fetching the menu.");
@@ -281,7 +287,8 @@
                 .then(data => {
                     const parser = new DOMParser();
                     const xml = parser.parseFromString(data, "text/xml");
-                    lunchContainer.innerHTML = xml.querySelector("DDISH_NM")?.textContent || "선택한 날짜의 급식이 없습니다...";
+                    const rawMenu = xml.querySelector("DDISH_NM")?.textContent || "선택한 날짜의 급식이 없습니다...";
+                    lunchContainer.innerHTML = removeAllergyInfo(rawMenu);
                     lunchCal.textContent = xml.querySelector("CAL_INFO")?.textContent || "";
                 })
                 .catch(() => lunchContainer.innerHTML = "An error occurred while fetching the menu.");
@@ -290,7 +297,8 @@
                 .then(data => {
                     const parser = new DOMParser();
                     const xml = parser.parseFromString(data, "text/xml");
-                    dinnerContainer.innerHTML = xml.querySelector("DDISH_NM")?.textContent || "선택한 날짜의 급식이 없습니다...";
+                    const rawMenu = xml.querySelector("DDISH_NM")?.textContent || "선택한 날짜의 급식이 없습니다...";
+                    dinnerContainer.innerHTML = removeAllergyInfo(rawMenu);
                     dinnerCal.textContent = xml.querySelector("CAL_INFO")?.textContent || "";
                 })
                 .catch(() => dinnerContainer.innerHTML = "An error occurred while fetching the menu.");
