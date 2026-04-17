@@ -3,26 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>성진중학교 급식</title>
     <link rel="icon" href="_e44a2cde-18dc-487d-96e3-2dee61acc3a5.ico">
-    <title>성진이의 단양고등학교 급식 사이트</title>
-    <meta property="og:title" content="성진이의 단양고등학교 급식 사이트">
-    <meta property="og:description" content="단양고등학교의 조식, 중식, 석식 메뉴와 칼로리 정보를 확인하세요.">
-    <meta property="og:image" content="_e44a2cde-18dc-487d-96e3-2dee61acc3a5.ico">
-    <meta property="og:url" content="https://seongjin-cafeteria-site.netlify.app">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="성진이의 단양고등학교 급식 사이트">
-    <meta name="twitter:description" content="단양고등학교의 조식, 중식, 석식 메뉴와 칼로리 정보를 확인하세요.">
-    <meta name="twitter:image" content="_e44a2cde-18dc-487d-96e3-2dee61acc3a5.ico">
-    <meta name="theme-color" content="#f0f2f5">
     <link rel="stylesheet" href="css/style.css">
-    <script>
-        // Netlify 환경 변수에서 API 키를 주입합니다
-        window.API_KEY = "${API_KEY}" || "";
-    </script>
 </head>
 <body class="light-theme">
-    <h1>성진이의 단양고등학교 급식 사이트</h1>
+    <h1>성진중학교 급식</h1>
     <div>
         <span>날짜 선택</span>
         <input type="date" id="date" name="date" value="">
@@ -64,6 +50,6 @@
             <p class="cal-info" id="dinnerCal"></p>
         </div>
     </div>
-    <script src="js/main.js"></script>
+    <script src="/.netlify/functions/main.js"></script>
 </body>
 </html>
