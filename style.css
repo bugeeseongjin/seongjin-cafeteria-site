@@ -1,0 +1,205 @@
+@font-face {
+    font-family: 'HakgyoansimBombanghakR';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimBombanghakR.woff2') format('woff2');
+    font-weight: normal;
+    font-style: 20px;
+}
+body {
+    font-family: 'HakgyoansimBombanghakR', sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: background-color 0.3s, color 0.3s;
+}
+body.light-theme {
+    background-color: #f0f2f5;
+    color: #333333;
+}
+body.dark-theme {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+h1 {
+    background-color: #ffffff;
+    color: #333333;
+    margin: 0;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    border-bottom: 3px solid #cccccc;
+    transition: background-color 0.3s, color 0.3s;
+}
+body.dark-theme h1 {
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+    border-bottom: 3px solid #444444;
+}
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: inherit;
+}
+input[type="date"] {
+    border: 2px solid #cccccc;
+    border-radius: 6px;
+    font-size: 16px;
+    padding: 8px;
+    width: 90%;
+    max-width: 300px;
+    background-color: #ffffff;
+    color: #333333;
+    transition: all 0.3s ease;
+}
+body.dark-theme input[type="date"] {
+    border-color: #555555;
+    background-color: #333333;
+    color: #e0e0e0;
+}
+input[type="date"]:hover,
+input[type="date"]:focus,
+body.dark-theme input[type="date"]:hover,
+body.dark-theme input[type="date"]:focus {
+    border-color: #999999;
+}
+.meal-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    flex-grow: 1;
+}
+.meal-section {
+    flex: 1 1 calc(33.33% - 20px);
+    margin: 10px;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    background-color: #ffffff;
+    min-width: 200px;
+    min-height: 200px;
+    position: relative;
+    transition: transform 0.3s ease, background-color 0.3s, color 0.3s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+body.dark-theme .meal-section {
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.meal-section h2 {
+    margin-top: 0;
+    color: #333333;
+    transition: color 0.3s;
+}
+body.dark-theme .meal-section h2 {
+    color: #ffffff;
+}
+.meal-section p {
+    margin-top: 20px;
+    color: inherit;
+    transition: color 0.3s;
+}
+.cal-info {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 14px;
+    color: #888888;
+}
+body.dark-theme .cal-info {
+    color: #aaaaaa;
+}
+.share-button {
+    background-color: #cccccc;
+    color: #333333;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    transition: background-color 0.3s ease;
+}
+.share-button:hover {
+    background-color: #bbbbbb;
+}
+body.dark-theme .share-button {
+    background-color: #555555;
+    color: #ffffff;
+}
+body.dark-theme .share-button:hover {
+    background-color: #666666;
+}
+.theme-switch {
+    margin-top: 20px;
+}
+.theme-switch input {
+    display: none;
+}
+.theme-switch label {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+.theme-switch label::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #999999;
+    border-radius: 34px;
+    transition: background-color 0.3s;
+}
+body.dark-theme .theme-switch label::before {
+    background-color: #555555;
+}
+.theme-switch label::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    width: 26px;
+    height: 26px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+.theme-switch input:checked + label::before {
+    background-color: #666666;
+}
+body.dark-theme .theme-switch input:checked + label::before {
+    background-color: #888888;
+}
+.theme-switch input:checked + label::after {
+    transform: translateX(26px);
+}
+.theme-switch label svg {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    transition: fill 0.3s;
+}
+.theme-switch label svg.sun { left: 8px; }
+.theme-switch label svg.moon { right: 8px; }
+body.dark-theme .theme-switch label svg {
+    fill: #ffffff;
+}
+@media screen and (max-width: 768px) {
+    .meal-section { flex: 1 1 calc(50% - 20px); }
+}
+@media screen and (max-width: 480px) {
+    .meal-section { flex: 1 1 100%; }
+    .share-button { top: 70px; }
+}
