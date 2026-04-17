@@ -1,8 +1,8 @@
-# 성진중학교 급식 사이트
+# 성진이의 단양고등학교 급식 사이트
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/7ce303d9-060c-4e85-ad8c-bd44b80acc13/deploy-status)](https://app.netlify.com/projects/seongjin-cafeteria-site/deploys)
 
-성진중학교의 조식, 중식, 석식 메뉴와 칼로리 정보를 확인하는 웹사이트입니다.
+성진이의 단양고등학교의 조식, 중식, 석식 메뉴와 칼로리 정보를 확인하는 웹사이트입니다.
 
 ## 주요 기능
 
