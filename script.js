@@ -15,7 +15,7 @@ const fetchMenu = () => {
     const lunchCal = document.getElementById("lunchCal");
     const dinnerCal = document.getElementById("dinnerCal");
 
-    fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=${process.env.API_KEY}&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=1`)
+    fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=48060c7a4fd14f30886424999d5fcba0&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${selectedDate}&MMEAL_SC_CODE=1`)
         .then(response => response.text())
         .then(data => {
             const parser = new DOMParser();
