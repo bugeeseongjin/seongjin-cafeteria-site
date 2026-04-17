@@ -8,4 +8,4 @@
   status = 200
 
 [template.environment]
-  API_KEY = "NEIS API Key - 발급받은 API 키를 입력하세요"
+  API_KEY = "48060c7a4fd14f30886424999d5fcba0"
