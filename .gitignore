@@ -1,1 +1,1 @@
-Nothing needs to be added to .gitignore since the changes only include source files (.css, .js) and documentation/config files (.md, .html).
+Nothing should be ignored based on the provided file changes. The changes only include source/config files (.toml, .md, .html, .js) with no build artifacts, dependencies, or temporary files that need to be ignored.
