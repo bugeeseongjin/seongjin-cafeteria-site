@@ -3,8 +3,6 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/7ce303d9-060c-4e85-ad8c-bd44b80acc13/deploy-status)](https://app.netlify.com/projects/seongjin-cafeteria-site/deploys)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-단양고등학교의每日 급식 정보를 제공하는 웹사이트입니다. NEIS (나이스) API 를 활용하여 실시간 급식 메뉴를 확인할 수 있습니다.
-
 ## 주요 기능
 
 - **실시간 급식 조회**: NEIS API 를 통해 매일의 급식 정보를 제공합니다
