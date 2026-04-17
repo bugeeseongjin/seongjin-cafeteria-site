@@ -3,53 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>성진중학교 급식</title>
-    <link rel="icon" href="_e44a2cde-18dc-487d-96e3-2dee61acc3a5.ico">
+    <title>성진이의 단양고등학교 급식 사이트</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="_e44a2cde-18dc-487d-96e3-2dee61acc3a5.ico">
 </head>
-<body class="light-theme">
-    <h1>성진중학교 급식</h1>
-    <div>
-        <span>날짜 선택</span>
-        <input type="date" id="date" name="date" value="">
+<body>
+    <div class="container">
+        <header>
+            <h1>성진이의 단양고등학교 급식 사이트</h1>
+            <div class="header-controls">
+                <span id="today-date"></span>
+                <button id="theme-toggle" class="btn-icon" title="다크모드 전환">
+                    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <div class="meal-card">
+                <div class="meal-header">
+                    <h2>오늘의 급식</h2>
+                    <button id="copy-btn" class="btn-copy">복사</button>
+                </div>
+                <div id="meal-content" class="meal-content">
+                    <div class="loading">급식 정보를 불러오는 중...</div>
+                </div>
+            </div>
+
+            <div class="date-selector">
+                <button id="prev-day" class="btn-nav">&lt;</button>
+                <input type="date" id="date-input">
+                <button id="next-day" class="btn-nav">&gt;</button>
+                <button id="today-btn" class="btn-today">오늘</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>단양고등학교 급식 정보 제공</p>
+        </footer>
     </div>
-    <button class="share-button" onclick="shareMenu()">급식 공유하기</button>
-    <div class="theme-switch">
-        <input type="checkbox" id="theme-switch-checkbox" onchange="toggleTheme()">
-        <label for="theme-switch-checkbox">
-            <svg class="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="5"></circle>
-                <line x1="12" y1="1" x2="12" y2="3"></line>
-                <line x1="12" y1="21" x2="12" y2="23"></line>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                <line x1="1" y1="12" x2="3" y2="12"></line>
-                <line x1="21" y1="12" x2="23" y2="12"></line>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-            </svg>
-            <svg class="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
-            </svg>
-        </label>
-    </div>
-    <div class="meal-container">
-        <div class="meal-section" id="breakfastContainer">
-            <h2>조식</h2>
-            <p id="breakfastMenu"></p>
-            <p class="cal-info" id="breakfastCal"></p>
-        </div>
-        <div class="meal-section" id="lunchContainer">
-            <h2>중식</h2>
-            <p id="lunchMenu"></p>
-            <p class="cal-info" id="lunchCal"></p>
-        </div>
-        <div class="meal-section" id="dinnerContainer">
-            <h2>석식</h2>
-            <p id="dinnerMenu"></p>
-            <p class="cal-info" id="dinnerCal"></p>
-        </div>
-    </div>
-    <script src="/.netlify/functions/main.js"></script>
+
+    <script src="js/main.js"></script>
 </body>
 </html>
