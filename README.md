@@ -4,7 +4,7 @@
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black)
 ![Netlify](https://img.shields.io/badge/netlify-%23000000.svg?style=for-the-badge&logo=netlify&logoColor=00C7B7)
-![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg?style=for-the-badge)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
 단양고등학교의 일일 급식 정보(조식, 중식, 석식)를 쉽고 빠르게 확인할 수 있는 웹 사이트입니다. 깔끔한 UI와 함께 칼로리 정보, 공유 기능, 다크 모드 등을 제공합니다.
 
@@ -50,11 +50,11 @@
 
 ## 📄 라이선스
 
-이 프로젝트는 **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)** 라이선스를 따릅니다.
+이 프로젝트의 소스 코드와 문서는 [MIT License](LICENSE)에 따라 제공됩니다.
 
-- **저작자 표시**: 적절한 출처와 라이선스에 대한 링크를 제공해야 합니다.
-- **비영리**: 이 저작물을 영리 목적으로 이용할 수 없습니다.
-- **동일조건변경허락**: 이 저작물을 개작, 변형 또는 가공했을 경우, 동일한 라이선스를 적용해야 합니다.
+저작권 고지와 라이선스 전문을 포함하면 상업적 이용, 수정 및 재배포가 가능합니다.
+
+NEIS API의 데이터와 외부 글꼴 등 제3자 자료에는 각 제공자의 이용약관과 라이선스가 적용됩니다.
 
 ---
 
