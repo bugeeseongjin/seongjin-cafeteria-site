@@ -20,53 +20,70 @@
 <body class="light-theme">
     <div class="school-page">
         <header class="school-header">
-            <h1>단양고등학교 <span>급식</span></h1>
+            <h1><a class="site-title" href="https://seongjin-cafeteria-site.netlify.app/">단양고등학교 <span>급식</span></a></h1>
         </header>
         <main>
             <div class="date-strip">
                 <div class="date-control">
-                    <label for="date">날짜 선택</label>
-                    <input type="date" id="date" name="date" value="">
+                    <span id="date-label">날짜 선택</span>
+                    <input type="hidden" id="date" name="date" value="">
+                    <button class="date-trigger" id="date-trigger" type="button" aria-haspopup="dialog" aria-controls="date-dialog" aria-labelledby="date-label date-display">
+                        <span id="date-display"></span>
+                        <span class="calendar-icon" aria-hidden="true"></span>
+                    </button>
                 </div>
                 <div class="display-controls" aria-label="급식 표시 설정">
                     <label class="switch-control" for="nutrition-switch-checkbox">
-                        <input type="checkbox" id="nutrition-switch-checkbox" role="switch" aria-controls="breakfastNutrition lunchNutrition dinnerNutrition" onchange="toggleNutrition()">
+                        <input type="checkbox" id="nutrition-switch-checkbox" role="switch" aria-controls="breakfastNutrition lunchNutrition dinnerNutrition">
                         <span>영양정보</span>
                     </label>
                     <label class="switch-control" for="theme-switch-checkbox">
-                        <input type="checkbox" id="theme-switch-checkbox" role="switch" onchange="toggleTheme()">
+                        <input type="checkbox" id="theme-switch-checkbox" role="switch">
                         <span>다크 모드</span>
                     </label>
-                    <button class="copy-button" id="copy-button" type="button" onclick="shareMenu()">급식 복사</button>
+                    <button class="copy-button" id="copy-button" type="button">
+                        <span class="copy-icon" aria-hidden="true"></span>
+                        <span id="copy-label">급식 복사</span>
+                    </button>
                 </div>
                 <p class="sr-only" id="copy-status" role="status" aria-live="polite"></p>
+                <p class="sr-only" id="fetch-status" role="status" aria-live="polite"></p>
             </div>
             <div class="meal-container">
-                <section class="meal-section" id="breakfastContainer" aria-labelledby="breakfastTitle">
+                <section class="meal-section" id="breakfastContainer" aria-labelledby="breakfastTitle" aria-busy="true">
                     <h2 id="breakfastTitle">조식</h2>
-                    <p class="meal-menu" id="breakfastMenu" aria-live="polite"></p>
+                    <p class="meal-menu" id="breakfastMenu"></p>
+                    <p class="cal-info" id="breakfastCal">칼로리 확인 중</p>
                     <div class="nutrition-info" id="breakfastNutrition" aria-label="조식 영양정보" hidden>
-                        <p class="cal-info" id="breakfastCal"></p>
-                        <p class="nutrient-info" id="breakfastNutrients"></p>
-                        <p class="nutrition-empty" id="breakfastNutritionEmpty">등록된 영양정보가 없습니다.</p>
+                        <div class="nutrition-inner">
+                            <p class="allergy-note">메뉴 옆 괄호는 알레르기 유발물질 번호입니다.</p>
+                            <p class="nutrient-info" id="breakfastNutrients"></p>
+                            <p class="nutrition-empty" id="breakfastNutritionEmpty">등록된 영양성분 정보가 없습니다.</p>
+                        </div>
                     </div>
                 </section>
-                <section class="meal-section" id="lunchContainer" aria-labelledby="lunchTitle">
+                <section class="meal-section" id="lunchContainer" aria-labelledby="lunchTitle" aria-busy="true">
                     <h2 id="lunchTitle">중식</h2>
-                    <p class="meal-menu" id="lunchMenu" aria-live="polite"></p>
+                    <p class="meal-menu" id="lunchMenu"></p>
+                    <p class="cal-info" id="lunchCal">칼로리 확인 중</p>
                     <div class="nutrition-info" id="lunchNutrition" aria-label="중식 영양정보" hidden>
-                        <p class="cal-info" id="lunchCal"></p>
-                        <p class="nutrient-info" id="lunchNutrients"></p>
-                        <p class="nutrition-empty" id="lunchNutritionEmpty">등록된 영양정보가 없습니다.</p>
+                        <div class="nutrition-inner">
+                            <p class="allergy-note">메뉴 옆 괄호는 알레르기 유발물질 번호입니다.</p>
+                            <p class="nutrient-info" id="lunchNutrients"></p>
+                            <p class="nutrition-empty" id="lunchNutritionEmpty">등록된 영양성분 정보가 없습니다.</p>
+                        </div>
                     </div>
                 </section>
-                <section class="meal-section" id="dinnerContainer" aria-labelledby="dinnerTitle">
+                <section class="meal-section" id="dinnerContainer" aria-labelledby="dinnerTitle" aria-busy="true">
                     <h2 id="dinnerTitle">석식</h2>
-                    <p class="meal-menu" id="dinnerMenu" aria-live="polite"></p>
+                    <p class="meal-menu" id="dinnerMenu"></p>
+                    <p class="cal-info" id="dinnerCal">칼로리 확인 중</p>
                     <div class="nutrition-info" id="dinnerNutrition" aria-label="석식 영양정보" hidden>
-                        <p class="cal-info" id="dinnerCal"></p>
-                        <p class="nutrient-info" id="dinnerNutrients"></p>
-                        <p class="nutrition-empty" id="dinnerNutritionEmpty">등록된 영양정보가 없습니다.</p>
+                        <div class="nutrition-inner">
+                            <p class="allergy-note">메뉴 옆 괄호는 알레르기 유발물질 번호입니다.</p>
+                            <p class="nutrient-info" id="dinnerNutrients"></p>
+                            <p class="nutrition-empty" id="dinnerNutritionEmpty">등록된 영양성분 정보가 없습니다.</p>
+                        </div>
                     </div>
                 </section>
             </div>
@@ -75,6 +92,29 @@
             <small>Copyright &copy; 2023-2026 황성진</small>
         </footer>
     </div>
+    <dialog class="date-dialog" id="date-dialog" aria-labelledby="calendar-title">
+        <div class="calendar-shell">
+            <div class="calendar-header">
+                <h2 id="calendar-title">날짜 선택</h2>
+                <button class="calendar-close" id="calendar-close" type="button" aria-label="달력 닫기">×</button>
+            </div>
+            <div class="calendar-month-nav">
+                <button class="calendar-nav" id="calendar-previous" type="button" aria-label="이전 달">‹</button>
+                <h3 id="calendar-month-label" aria-live="polite"></h3>
+                <button class="calendar-nav" id="calendar-next" type="button" aria-label="다음 달">›</button>
+            </div>
+            <div class="calendar-weekdays" aria-hidden="true">
+                <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+            </div>
+            <div class="calendar-grid" id="calendar-grid" role="group" aria-label="날짜"></div>
+            <form class="calendar-direct-form" id="calendar-direct-form">
+                <label for="calendar-direct-date">날짜 직접 입력</label>
+                <input type="date" id="calendar-direct-date" min="0001-01-01" max="9999-12-31" required>
+                <button class="calendar-apply" type="submit">적용</button>
+            </form>
+            <button class="calendar-today" id="calendar-today" type="button">오늘 날짜 선택</button>
+        </div>
+    </dialog>
     <script src="script.js"></script>
 </body>
 </html>
