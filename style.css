@@ -582,7 +582,7 @@ a:focus-visible {
     content: "";
 }
 
-.copy-button[data-state="copying"] .copy-icon {
+:is(.copy-button, .meal-copy)[data-state="copying"] .copy-icon {
     height: 12px;
     border: 2px solid transparent;
     border-top-color: currentColor;
@@ -591,15 +591,15 @@ a:focus-visible {
     animation: copying-spin 650ms linear infinite;
 }
 
-.copy-button[data-state="copying"] .copy-icon::before {
+:is(.copy-button, .meal-copy)[data-state="copying"] .copy-icon::before {
     display: none;
 }
 
-.copy-button[data-state="success"] .copy-icon {
+:is(.copy-button, .meal-copy)[data-state="success"] .copy-icon {
     border: 0;
 }
 
-.copy-button[data-state="success"] .copy-icon::before {
+:is(.copy-button, .meal-copy)[data-state="success"] .copy-icon::before {
     top: 0;
     left: 2px;
     width: 7px;
@@ -822,6 +822,57 @@ input[type="date"] {
     .calendar-shell {
         padding: 12px;
     }
+}
+
+.meal-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 100%;
+    min-height: 44px;
+    margin: -8px 0;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transform-origin: left center;
+    transition: opacity 180ms ease, color 320ms ease;
+}
+
+.meal-copy:hover:not(:disabled) > span:first-child {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.meal-copy:disabled {
+    cursor: default;
+}
+
+.meal-copy .copy-icon {
+    flex: 0 0 12px;
+    opacity: 0.55;
+    transition: opacity 180ms ease;
+}
+
+.meal-copy:hover:not(:disabled) .copy-icon,
+.meal-copy:focus-visible .copy-icon,
+.meal-copy[data-state] .copy-icon {
+    opacity: 1;
+}
+
+.meal-copy:disabled:not([data-state="copying"]) .copy-icon {
+    opacity: 0;
+}
+
+.meal-copy-message {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 400;
+    white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -24,6 +24,7 @@ let fetchSequence = 0;
 let loadingMeals = true;
 let copying = false;
 let copyResetTimer;
+let copyFeedbackButton = null;
 let calendarYear;
 let calendarMonth;
 let calendarClosing = false;
@@ -59,7 +60,30 @@ const animateElement = (element, frames, options = {}) => {
 };
 
 const updateCopyAvailability = () => {
-    copyButton.disabled = loadingMeals || copying;
+    const hasMeals = mealTypes.some(([meal]) => mealData[meal].phase === "ready" && mealData[meal].items.length > 0);
+    copyButton.disabled = loadingMeals || copying || !hasMeals;
+    mealTypes.forEach(([meal, title]) => {
+        const button = document.getElementById(meal + "Copy");
+        const available = mealData[meal].phase === "ready" && mealData[meal].items.length > 0;
+        button.disabled = loadingMeals || copying || !available;
+        button.title = loadingMeals ? "급식을 불러오는 중입니다." : available ? title + "만 복사" : "급식이 없어 복사할 수 없습니다.";
+    });
+};
+
+const readNutritionPreference = () => {
+    try {
+        return document.cookie.split(";").some(cookie => cookie.trim() === "nutrition_visibility=1");
+    } catch {
+        return false;
+    }
+};
+
+const saveNutritionPreference = () => {
+    try {
+        document.cookie = "nutrition_visibility=" + (nutritionToggle.checked ? "1" : "0")
+            + "; Max-Age=31536000; Path=/; SameSite=Lax"
+            + (location.protocol === "https:" ? "; Secure" : "");
+    } catch {}
 };
 
 const renderMeal = (meal, motion = true) => {
@@ -182,40 +206,64 @@ const fetchMenu = async () => {
         : "급식 정보를 불러왔습니다.";
 };
 
-const buildClipboardText = () => {
-    const sections = mealTypes.map(([meal, title]) => {
+const buildClipboardText = (selectedMeal = null) => {
+    const selectedTypes = mealTypes.filter(([meal]) =>
+        (!selectedMeal || meal === selectedMeal) && mealData[meal].phase === "ready" && mealData[meal].items.length > 0
+    );
+    if (selectedTypes.length === 0) return "";
+    const sections = selectedTypes.map(([meal, title]) => {
         const state = mealData[meal];
-        const menu = state.phase === "ready"
-            ? state.items.map(removeAllergyInfo).join("\n")
-            : state.phase === "error" ? "급식 정보를 불러오지 못했습니다." : "선택한 날짜의 급식이 없습니다.";
-        return [title, menu, "칼로리: " + (state.calories || "정보 없음")].join("\n");
+        return [
+            title,
+            state.items.map(removeAllergyInfo).join("\n"),
+            "칼로리: " + (state.calories || "정보 없음")
+        ].join("\n");
     });
-    return dateInput.value + " 단양고등학교 급식\n\n" + sections.join("\n\n");
+    return dateInput.value + " 단양고등학교 급식\n\n" + sections.join("\n\n")
+        + "\n\n출처: https://seongjin-cafeteria-site.netlify.app/";
 };
 
-const shareMenu = async () => {
+const resetCopyFeedback = () => {
+    if (copyFeedbackButton) {
+        copyFeedbackButton.dataset.state = "";
+        const message = copyFeedbackButton.querySelector(".meal-copy-message");
+        if (message) message.textContent = "";
+    }
+    copyLabel.textContent = "급식 복사";
+    copyFeedbackButton = null;
+};
+
+const shareMenu = async (selectedMeal = null) => {
     if (loadingMeals || copying) return;
+    const selectedType = selectedMeal ? mealTypes.find(([meal]) => meal === selectedMeal) : null;
+    if (selectedMeal && (!selectedType || mealData[selectedMeal].phase !== "ready" || mealData[selectedMeal].items.length === 0)) return;
+    const clipboardText = buildClipboardText(selectedMeal);
+    if (!clipboardText) return;
     clearTimeout(copyResetTimer);
+    resetCopyFeedback();
+    const button = selectedMeal ? document.getElementById(selectedMeal + "Copy") : copyButton;
+    const label = selectedMeal ? button.querySelector(".meal-copy-message") : copyLabel;
+    copyFeedbackButton = button;
     copying = true;
     updateCopyAvailability();
-    copyButton.dataset.state = "copying";
-    copyLabel.textContent = "복사 중";
-    animateElement(copyButton, [{ transform: "scale(.96)" }, { transform: "scale(1)" }], { duration: 180 });
+    button.dataset.state = "copying";
+    label.textContent = "복사 중";
+    animateElement(button, [{ transform: "scale(.96)" }, { transform: "scale(1)" }], { duration: 180 });
     try {
-        await navigator.clipboard.writeText(buildClipboardText());
-        copyButton.dataset.state = "success";
-        copyLabel.textContent = "복사 완료";
-        copyStatus.textContent = "급식과 칼로리가 클립보드에 복사되었습니다.";
-        animateElement(copyButton, [
+        await navigator.clipboard.writeText(clipboardText);
+        button.dataset.state = "success";
+        label.textContent = "복사 완료";
+        copyStatus.textContent = (selectedType ? selectedType[1] + " " : "") + "급식과 칼로리가 클립보드에 복사되었습니다.";
+        animateElement(button, [
             { transform: "scale(1)" },
             { transform: "scale(1.05)", offset: 0.45 },
             { transform: "scale(1)" }
         ], { duration: 340 });
     } catch {
-        copyButton.dataset.state = "error";
-        copyLabel.textContent = "복사 실패";
+        button.dataset.state = "error";
+        label.textContent = "복사 실패";
         copyStatus.textContent = "복사하지 못했습니다. 브라우저의 클립보드 권한을 확인해 주세요.";
-        animateElement(copyButton, [
+        animateElement(button, [
             { transform: "translateX(0)" },
             { transform: "translateX(-3px)" },
             { transform: "translateX(3px)" },
@@ -224,10 +272,7 @@ const shareMenu = async () => {
     } finally {
         copying = false;
         updateCopyAvailability();
-        copyResetTimer = setTimeout(() => {
-            copyButton.dataset.state = "";
-            copyLabel.textContent = "급식 복사";
-        }, 2000);
+        copyResetTimer = setTimeout(resetCopyFeedback, 2000);
     }
 };
 
@@ -364,9 +409,15 @@ dateDialog.addEventListener("click", event => {
     const rect = dateDialog.getBoundingClientRect();
     if (event.target === dateDialog && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) closeCalendar();
 });
-nutritionToggle.addEventListener("change", () => toggleNutrition());
+nutritionToggle.addEventListener("change", () => {
+    saveNutritionPreference();
+    toggleNutrition();
+});
 themeToggle.addEventListener("change", toggleTheme);
-copyButton.addEventListener("click", shareMenu);
+copyButton.addEventListener("click", () => shareMenu());
+mealTypes.forEach(([meal]) => {
+    document.getElementById(meal + "Copy").addEventListener("click", () => shareMenu(meal));
+});
 
 let savedTheme = "light";
 try {
@@ -374,7 +425,7 @@ try {
 } catch {}
 themeToggle.checked = savedTheme === "dark";
 toggleTheme();
-nutritionToggle.checked = false;
+nutritionToggle.checked = readNutritionPreference();
 toggleNutrition(false);
 dateInput.value = toDateValue(new Date());
 dateDisplay.textContent = dateInput.value.replaceAll("-", ". ");
