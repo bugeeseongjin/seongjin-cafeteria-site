@@ -11,15 +11,20 @@
     --school-blue: #0091ea;
     --school-label: #006fb8;
     --focus: #005fcc;
+    --switch-track: #767d84;
 }
 
 * {
     box-sizing: border-box;
 }
 
+[hidden] {
+    display: none !important;
+}
+
 body {
     margin: 0;
-    background: var(--canvas);
+    background: var(--surface);
     color: var(--on-surface);
     font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
     font-size: 16px;
@@ -28,7 +33,6 @@ body {
     -webkit-text-size-adjust: 100%;
 }
 
-/* Preserve the theme stored by the existing script without adding a toolbar. */
 body.dark-theme {
     color-scheme: dark;
     --surface: #202326;
@@ -42,16 +46,18 @@ body.dark-theme {
     --school-blue: #55b9f5;
     --school-label: #7ccaff;
     --focus: #7ccaff;
+    --switch-track: #767d84;
 }
 
 .school-page {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 480px;
+    max-width: 1280px;
     min-height: 100vh;
     min-height: 100dvh;
     margin-inline: auto;
+    padding-inline: clamp(12px, 3vw, 32px);
     background: var(--surface);
 }
 
@@ -59,14 +65,14 @@ body.dark-theme {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 50px;
-    padding: 12px 16px;
+    min-height: 56px;
+    padding: 12px 0;
     border-bottom: 1px solid var(--divider);
 }
 
 h1 {
     margin: 0;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 400;
     line-height: 1.4;
     text-align: center;
@@ -87,22 +93,32 @@ main {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
-    gap: 8px 12px;
-    min-height: 68px;
-    padding: 12px 16px;
+    justify-content: space-between;
+    gap: 4px 16px;
+    margin-top: 16px;
+    padding: 8px 12px;
+    border: 1px solid var(--divider);
+    border-radius: 4px;
     background: var(--section-container);
-    border-bottom: 1px solid var(--divider);
 }
 
-.date-strip label {
+.date-control,
+.display-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    min-width: 0;
+}
+
+.date-control > label {
     color: var(--secondary);
     font-size: 14px;
     letter-spacing: -0.4px;
 }
 
 input[type="date"] {
-    width: 180px;
+    width: 12rem;
     max-width: 100%;
     min-width: 0;
     min-height: 44px;
@@ -113,28 +129,100 @@ input[type="date"] {
     color: var(--on-surface);
     font: inherit;
     letter-spacing: inherit;
-    transition: border-color 150ms ease;
+}
+
+.switch-control {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    color: var(--secondary);
+    font-size: 14px;
+    letter-spacing: -0.4px;
+    cursor: pointer;
+}
+
+.switch-control input {
+    appearance: none;
+    -webkit-appearance: none;
+    flex: 0 0 32px;
+    width: 32px;
+    height: 20px;
+    margin: 0;
+    padding: 2px;
+    border: 1px solid var(--switch-track);
+    border-radius: 20px;
+    background: var(--switch-track);
+    cursor: pointer;
+    transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.switch-control input::before {
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ffffff;
+    content: "";
+    transition: transform 150ms ease;
+}
+
+.switch-control input:checked {
+    border-color: var(--school-label);
+    background: var(--school-label);
+}
+
+.switch-control input:checked::before {
+    transform: translateX(12px);
+}
+
+.copy-button {
+    min-width: 88px;
+    min-height: 44px;
+    padding: 8px 12px;
+    border: 1px solid var(--school-label);
+    border-radius: 4px;
+    background: var(--school-label);
+    color: var(--surface);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: opacity 150ms ease;
+}
+
+.copy-button:hover {
+    opacity: 0.85;
+}
+
+.copy-button:disabled {
+    cursor: wait;
+    opacity: 0.65;
 }
 
 input[type="date"]:hover {
     border-color: var(--school-blue);
 }
 
-input[type="date"]:focus-visible {
-    border-color: var(--focus);
+input:focus-visible,
+button:focus-visible {
     outline: 2px solid var(--focus);
-    outline-offset: 2px;
+    outline-offset: 3px;
 }
 
 .meal-container {
     display: grid;
-    gap: 12px;
-    padding: 16px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    gap: 16px;
+    padding-block: 20px;
 }
 
 .meal-section {
     min-width: 0;
-    padding: 16px;
+    padding: clamp(12px, 1.6vw, 20px);
     border: 1px solid var(--border);
     border-radius: 4px;
     background: var(--surface);
@@ -142,38 +230,66 @@ input[type="date"]:focus-visible {
 
 .meal-section h2 {
     margin: 0;
-    padding-bottom: 12px;
+    padding-bottom: 10px;
     border-bottom: 1px solid var(--divider);
     color: var(--school-label);
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 700;
     line-height: 1.4;
 }
 
 .meal-menu {
+    display: grid;
+    gap: 6px 16px;
     min-height: 48px;
     margin: 12px 0 0;
-    line-height: 1.75;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.menu-item {
+    min-width: 0;
+}
+
+.menu-item:only-child {
+    grid-column: 1 / -1;
+}
+
+.nutrition-info {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--divider);
+}
+
+.cal-info,
+.nutrient-info,
+.nutrition-empty {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+    letter-spacing: -0.4px;
     overflow-wrap: anywhere;
 }
 
 .cal-info {
-    margin: 12px 0 0;
-    color: var(--muted);
-    font-size: 14px;
-    line-height: 1.45;
-    letter-spacing: -0.4px;
-    text-align: right;
-    overflow-wrap: anywhere;
+    color: var(--secondary);
+    font-weight: 600;
 }
 
-.cal-info:empty {
+.nutrient-info {
+    margin-top: 6px;
+    white-space: pre-line;
+}
+
+.cal-info:empty,
+.nutrient-info:empty {
     display: none;
 }
 
 .school-footer {
-    padding: 20px 16px calc(20px + env(safe-area-inset-bottom, 0px));
-    background: var(--section-container);
+    padding: 16px 12px calc(16px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--divider);
     color: var(--muted);
     text-align: center;
     overflow-wrap: anywhere;
@@ -185,8 +301,126 @@ input[type="date"]:focus-visible {
     letter-spacing: -0.3px;
 }
 
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+@media (max-width: 599px) {
+    .school-header {
+        min-height: 50px;
+        padding-block: 10px;
+    }
+
+    h1 {
+        font-size: 18px;
+    }
+
+    .date-strip {
+        gap: 4px;
+        margin-top: 12px;
+        padding: 6px 8px;
+    }
+
+    .date-control,
+    .display-controls {
+        width: 100%;
+        justify-content: space-between;
+        gap: 6px;
+    }
+
+    .date-control input {
+        flex: 1;
+        max-width: 13rem;
+    }
+
+    .display-controls {
+        border-top: 1px solid var(--divider);
+    }
+
+    .meal-container {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+        padding-block: 12px;
+    }
+
+    .meal-section {
+        padding: 12px;
+    }
+
+    .meal-section h2 {
+        padding-bottom: 8px;
+        font-size: 16px;
+    }
+
+    .meal-menu {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 4px 12px;
+        min-height: 0;
+        margin-top: 8px;
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    .school-footer {
+        padding-top: 10px;
+        padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    }
+}
+
+@media (max-width: 359px) {
+    .switch-control {
+        gap: 4px;
+        font-size: 12px;
+    }
+
+    .copy-button {
+        min-width: 80px;
+        padding-inline: 8px;
+        font-size: 13px;
+    }
+
+    .meal-menu {
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 600px) and (max-height: 550px) {
+    .school-header {
+        min-height: 44px;
+        padding-block: 8px;
+    }
+
+    .date-strip {
+        margin-top: 8px;
+        padding-block: 4px;
+    }
+
+    .meal-container {
+        gap: 12px;
+        padding-block: 12px;
+    }
+
+    .meal-menu {
+        gap: 4px;
+        margin-top: 8px;
+        font-size: 14px;
+        line-height: 1.45;
+    }
+
+    .school-footer {
+        padding-block: 8px;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
-    input[type="date"] {
-        transition: none;
+    *,
+    *::before {
+        transition: none !important;
     }
 }

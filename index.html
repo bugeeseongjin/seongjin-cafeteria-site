@@ -24,33 +24,57 @@
         </header>
         <main>
             <div class="date-strip">
-                <label for="date">날짜 선택</label>
-                <input type="date" id="date" name="date" value="">
+                <div class="date-control">
+                    <label for="date">날짜 선택</label>
+                    <input type="date" id="date" name="date" value="">
+                </div>
+                <div class="display-controls" aria-label="급식 표시 설정">
+                    <label class="switch-control" for="nutrition-switch-checkbox">
+                        <input type="checkbox" id="nutrition-switch-checkbox" role="switch" aria-controls="breakfastNutrition lunchNutrition dinnerNutrition" onchange="toggleNutrition()">
+                        <span>영양정보</span>
+                    </label>
+                    <label class="switch-control" for="theme-switch-checkbox">
+                        <input type="checkbox" id="theme-switch-checkbox" role="switch" onchange="toggleTheme()">
+                        <span>다크 모드</span>
+                    </label>
+                    <button class="copy-button" id="copy-button" type="button" onclick="shareMenu()">급식 복사</button>
+                </div>
+                <p class="sr-only" id="copy-status" role="status" aria-live="polite"></p>
             </div>
             <div class="meal-container">
                 <section class="meal-section" id="breakfastContainer" aria-labelledby="breakfastTitle">
                     <h2 id="breakfastTitle">조식</h2>
                     <p class="meal-menu" id="breakfastMenu" aria-live="polite"></p>
-                    <p class="cal-info" id="breakfastCal"></p>
+                    <div class="nutrition-info" id="breakfastNutrition" aria-label="조식 영양정보" hidden>
+                        <p class="cal-info" id="breakfastCal"></p>
+                        <p class="nutrient-info" id="breakfastNutrients"></p>
+                        <p class="nutrition-empty" id="breakfastNutritionEmpty">등록된 영양정보가 없습니다.</p>
+                    </div>
                 </section>
                 <section class="meal-section" id="lunchContainer" aria-labelledby="lunchTitle">
                     <h2 id="lunchTitle">중식</h2>
                     <p class="meal-menu" id="lunchMenu" aria-live="polite"></p>
-                    <p class="cal-info" id="lunchCal"></p>
+                    <div class="nutrition-info" id="lunchNutrition" aria-label="중식 영양정보" hidden>
+                        <p class="cal-info" id="lunchCal"></p>
+                        <p class="nutrient-info" id="lunchNutrients"></p>
+                        <p class="nutrition-empty" id="lunchNutritionEmpty">등록된 영양정보가 없습니다.</p>
+                    </div>
                 </section>
                 <section class="meal-section" id="dinnerContainer" aria-labelledby="dinnerTitle">
                     <h2 id="dinnerTitle">석식</h2>
                     <p class="meal-menu" id="dinnerMenu" aria-live="polite"></p>
-                    <p class="cal-info" id="dinnerCal"></p>
+                    <div class="nutrition-info" id="dinnerNutrition" aria-label="석식 영양정보" hidden>
+                        <p class="cal-info" id="dinnerCal"></p>
+                        <p class="nutrient-info" id="dinnerNutrients"></p>
+                        <p class="nutrition-empty" id="dinnerNutritionEmpty">등록된 영양정보가 없습니다.</p>
+                    </div>
                 </section>
             </div>
         </main>
         <footer class="school-footer">
-            <small>Copyright &copy; 2023-2026 bugeeseongjin</small>
+            <small>Copyright &copy; 2023-2026 황성진</small>
         </footer>
     </div>
-    <!-- Keep the existing theme initialization compatible without displaying extra tools. -->
-    <input type="checkbox" id="theme-switch-checkbox" hidden>
     <script src="script.js"></script>
 </body>
 </html>
